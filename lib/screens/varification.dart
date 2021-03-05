@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:todolist/Controllers/databasehelper.dart';
 import 'createpassword.dart';
 
 
@@ -15,6 +16,9 @@ class Varification extends StatefulWidget {
 
 
 class VarificationState extends State<Varification> {
+
+  final TextEditingController _codeController = new TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +76,7 @@ class VarificationState extends State<Varification> {
               ),
               Column(
                 children: <Widget>[
-                  inputFile(label: '-', keyboardType: TextInputType.number),
+                  inputFile(label: '-', keyboardType: TextInputType.text,controller: _codeController),
                 ],
               ),
               Container(
@@ -81,10 +85,9 @@ class VarificationState extends State<Varification> {
                   minWidth: double.infinity,
                   height: 60,
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CreatePassword()));
+                    Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: (context) => CreatePassword()));
                   },
                   color: Color.fromRGBO(61, 167, 0, 1),
                   elevation: 0,
@@ -111,7 +114,7 @@ class VarificationState extends State<Varification> {
 
 // we will be creating a widget for text field
 Widget inputFile(
-    {label, obscureText = false, keyboardType = TextInputType.text}) {
+    {label, obscureText = false, keyboardType = TextInputType.text,controller}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -119,6 +122,7 @@ Widget inputFile(
         height: 5,
       ),
       TextField(
+        controller: controller,
         obscureText: obscureText,
         keyboardType: keyboardType,
         style: TextStyle(

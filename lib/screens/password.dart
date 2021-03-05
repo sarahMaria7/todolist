@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:todolist/Controllers/databasehelper.dart';
 import 'varification.dart';
 
 class Password extends StatefulWidget {
@@ -11,6 +12,11 @@ class Password extends StatefulWidget {
 
 
 class PasswordState extends State<Password> {
+
+  DatabaseHelper databaseHelper = new DatabaseHelper();
+  String msgStatus = '';
+
+  final TextEditingController _emailController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +83,14 @@ class PasswordState extends State<Password> {
                   minWidth: double.infinity,
                   height: 60,
                   onPressed: () {
+
+                    databaseHelper.resetPassword(_emailController.text.trim());
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => Varification()));
+
+
                   },
                   color: Color.fromRGBO(61, 167, 0, 1),
                   elevation: 0,
