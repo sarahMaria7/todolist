@@ -41,7 +41,7 @@ class TodayPageState extends State<TodayPage> {
 
 
  _appBar(height, fdate, frday) => PreferredSize(
-    preferredSize:  Size(MediaQuery.of(context).size.width, height + 185.0 ),
+    preferredSize:  Size(MediaQuery.of(context).size.width, height + 200.0 ),
     child: Stack(
       children: <Widget>[ 
 
