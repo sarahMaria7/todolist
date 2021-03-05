@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todolist/Controllers/databasehelper.dart';
+import 'package:todolist/screens/signin.dart';
 
 Widget drawerwidget(BuildContext context) {
+
+
+  _save(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'token';
+    final value = token;
+    prefs.setString(key, value);
+  }
+
+
   return Container(
       width: MediaQuery.of(context).size.width * 0.75,
       child: Drawer(
@@ -33,7 +46,7 @@ Widget drawerwidget(BuildContext context) {
                                    ),
                                  ),
                                ),
-                      Text('Hazem TG', 
+                      Text("",
                       style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
 
                               ],
@@ -81,7 +94,13 @@ Widget drawerwidget(BuildContext context) {
                     fontWeight: FontWeight.bold), 
                     textAlign: TextAlign.end, 
               ),
-              onTap: () {},
+              onTap: () {
+                _save('0');
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage1()));
+
+
+              },
             ),
        
                 ],
