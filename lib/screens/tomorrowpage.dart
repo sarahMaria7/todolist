@@ -13,11 +13,20 @@ class TomorrowPage extends StatefulWidget {
 
  
 class TomorrowPageState extends State<TomorrowPage> {
-  DateTime _currentDate2 = new DateTime.now(); 
+
+   static DateTime tomorrow() {
+    DateTime now = DateTime.now();
+    return DateTime(
+      now.year,
+      now.month,
+      now.day + 1,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-       String formatDate2 = intl.DateFormat('yyyy-MM-dd').format(_currentDate2); 
-      String formatDay2 = intl.DateFormat('EEEE').format(_currentDate2); 
+       String formatDate2 = intl.DateFormat('yyyy-MM-dd').format(tomorrow()); 
+      String formatDay2 = intl.DateFormat('EEEE').format(tomorrow()); 
     return Scaffold(  
         //extendBodyBehindAppBar: true, 
           drawer: drawerwidget(context),       
