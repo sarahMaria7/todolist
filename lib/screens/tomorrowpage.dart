@@ -12,7 +12,7 @@ class TomorrowPage extends StatefulWidget {
   
 
  
-class TomorrowPageState extends State<TomorrowPage> {
+class TomorrowPageState extends State<TomorrowPage> { 
   DateTime _currentDate2 = new DateTime.now(); 
   @override
   Widget build(BuildContext context) {

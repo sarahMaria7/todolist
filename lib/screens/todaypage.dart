@@ -15,7 +15,9 @@ class TodayPage extends StatefulWidget {
 class TodayPageState extends State<TodayPage> {
   DateTime _currentDate = new DateTime.now(); 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
+     var h = MediaQuery.of(context).size.height; 
+    var w = MediaQuery.of(context).size.width; 
        String formatDate = intl.DateFormat('yyyy-MM-dd').format(_currentDate); 
       String formatDay = intl.DateFormat('EEEE').format(_currentDate); 
     return Scaffold(  
@@ -23,16 +25,24 @@ class TodayPageState extends State<TodayPage> {
           drawer: drawerwidget(context),       
       appBar:  _appBar(AppBar().preferredSize.height, formatDate, formatDay), 
       
-      body: ListView( 
+      body: Container(
+    
+    
+    child: ListView( 
     padding: EdgeInsets.all(12.0), 
     scrollDirection: Axis.vertical, 
     children: <Widget>[ 
+         Column(
+             children: <Widget>[
 
+             ]
+         )
                 
     ], 
       ), 
-      
+      ), 
     
+
     );
   } 
 
@@ -107,7 +117,9 @@ class TodayPageState extends State<TodayPage> {
           right: 20.0, 
           //bottom: 55.0, 
           child:RawMaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              
+            },
             elevation: 2.0,
             //fillColor: Colors.green, 
             child:  Image(
