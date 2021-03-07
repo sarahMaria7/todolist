@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //import 'screens/todaypage.dart'; 
 //import 'screens/tomorrowpage.dart'; 
 import 'package:flutter/services.dart'; 
-import 'screens/signup.dart'; 
+//import 'screens/signup.dart'; 
 import 'screens/signin.dart'; 
 //import 'screens/createpassword.dart'; 
 //import 'screens/password.dart'; 
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
 
 
 
-      home: SignupPage(),
+      home: LoginPage1(),
     );
   }
 }

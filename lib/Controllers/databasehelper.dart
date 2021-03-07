@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:todolist/models/task.dart'; 
 class DatabaseHelper{
 
 
@@ -19,7 +19,7 @@ class DatabaseHelper{
           "email": "$email",
           "password" : "$password"
         } ) ;
-    print(response.body.toString());
+    //print(response.body.toString());
     status = response.body.contains('error');
 
     var data = json.decode(response.body);
@@ -27,39 +27,44 @@ class DatabaseHelper{
     if(status){
       print('data : ${data["error"]}');
     }else{
-      print('data : ${data["token"]}');
-      _save(data["token"]);
+      print('data : ${data["access_token"]}');
+      _save(data["access_token"]);
     }
 
   }
 
-  registerData(String name ,String email , String password, String password_confirmation) async{
-    String myUrl = "$serverUrl/register";
+  registerData(String name ,String email , String password, String password_confirmation) async{ 
+  
+    String myUrl = "$serverUrl/register"; 
+ 
+         
     final response = await  http.post(myUrl,
         headers: {
           'Accept':'application/json'
         },
         body: {
-          "name": "$name",
-          "email": "$email",
-          "password" : "$password",
-          "password_confirmation":"$password_confirmation"
-        } ) ;
+          "name": name,
+          "email": email,
+          "password" : password,
+          "password_confirmation":password_confirmation
+        } ) ; 
+  
     status = response.body.contains('error');
 
     var data = json.decode(response.body);
-
+          
+  
     if(status){
       print('data : ${data["error"]}');
     }else{
-      print('data : ${data["token"]}');
-      _save(data["token"]);
+      print('data : ${data["access_token"]}');
+      _save(data["access_token"]);
     }
 
   }
 
   resetPassword(String email) async{
-    String myUrl = "http://young-tor-98045.herokuapp.com/api/password/email";
+    String myUrl = "$serverUrl/password/email";
     final response = await  http.post(myUrl,
         body: {
           "email": "$email",
@@ -76,6 +81,76 @@ class DatabaseHelper{
     }
 
   }
+
+Future<List<Task>> getTodyTasks()async{
+    List tasklist=List<Task>();
+    String myUrl= "$serverUrl/tasks/todayTask"; 
+  final prefs = await SharedPreferences.getInstance();  
+  final key = 'token'; 
+  final value = prefs.get(key ) ?? 0; 
+    try{
+      http.Response res= await http.post(myUrl,
+        headers: { "Accept": 'application/json',
+          'Authorization': 'bearer $value'},
+        body: {
+            "timeZone":"Africa/Algiers"
+        }
+      );
+     var data=  json.decode(res.body);
+
+     List l=data["data"];
+    for (var i=0;i<l.length;i++){
+      var t= Task.fromJson(l[i]);
+      tasklist.add(t);
+    }
+
+    }
+    catch(e) {}
+    return tasklist;
+
+
+  }
+
+
+Future<List<Task>> getTomorrowTasks()async{
+    List tasklist2=List<Task>();
+    String myUrl= "$serverUrl/tasks/tomorrowTask"; 
+  final prefs = await SharedPreferences.getInstance();  
+  final key = 'token'; 
+  final value = prefs.get(key ) ?? 0; 
+    try{
+      http.Response res= await http.get(myUrl,
+        headers: { "Accept": 'application/json',
+          'Authorization': 'bearer $value'}, 
+      );
+     var data=  json.decode(res.body);
+
+     List l2=data["data"];
+    for (var i=0;i<l2.length;i++){
+      var t2= Task.fromJson(l2[i]);
+      tasklist2.add(t2);
+    }
+
+    }
+    catch(e) {}
+    return tasklist2;
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //
   // Future<List> getData() async{
@@ -109,25 +184,48 @@ class DatabaseHelper{
   //   });
   // }
   //
-  // void addData(String name , String price) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final key = 'token';
-  //   final value = prefs.get(key ) ?? 0;
-  //
-  //   String myUrl = "$serverUrl/products";
-  //   http.post(myUrl,
-  //       headers: {
-  //         'Accept':'application/json',
-  //         'Authorization' : 'Bearer $value'
-  //       },
-  //       body: {
-  //         "name": "$name",
-  //         "price" : "$price"
-  //       }).then((response){
-  //     print('Response status : ${response.statusCode}');
-  //     print('Response body : ${response.body}');
-  //   });
-  // }
+   void addData(String name) async {
+    final prefs = await SharedPreferences.getInstance();
+     final key = 'token';
+     final value = prefs.get(key ) ?? 0;
+  
+    String myUrl = "$serverUrl/tasks/storeToday";
+    http.post(myUrl,
+        headers: {
+          'Accept':'application/json',
+          'Authorization' : 'Bearer $value'
+        },
+         body: {
+           "name": "$name",
+           "timeZone":"Africa/Algiers" 
+        }).then((response){
+       print('Response status : ${response.statusCode}');
+       print('Response body : ${response.body}');
+     });
+   } 
+
+
+
+void addDataTomorrow(String name) async {
+    final prefs = await SharedPreferences.getInstance();
+     final key = 'token';
+     final value = prefs.get(key ) ?? 0;
+  
+    String myUrl = "$serverUrl/tasks/storeTomorrow";
+    http.post(myUrl,
+        headers: {
+          'Accept':'application/json',
+          'Authorization' : 'Bearer $value'
+        },
+         body: {
+           "name": "$name",
+           "timeZone":"Africa/Algiers" 
+        }).then((response){
+       print('Response status : ${response.statusCode}');
+       print('Response body : ${response.body}');
+     });
+   }
+
   //
   //
   // void editData(int id,String name , String price) async {

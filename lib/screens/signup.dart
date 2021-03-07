@@ -51,7 +51,7 @@ class SignupPageState extends State<SignupPage> {
   }
 
 
-  void _showDialog(){
+  void _showDialog(){ 
     showDialog(
         context:context ,
         builder:(BuildContext context){
@@ -92,7 +92,8 @@ class SignupPageState extends State<SignupPage> {
 
   @override
   initState(){
-    read();
+    read(); 
+    super.initState(); 
   }
 
   @override
@@ -192,6 +193,22 @@ class SignupPageState extends State<SignupPage> {
       ),
     );
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // we will be creating a widget for text field
   Widget _inputFile({label, obscureText = false, keyboardType = TextInputType.text,controller}) {

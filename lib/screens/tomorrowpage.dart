@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart'; 
 import 'package:todolist/widgets/drawer.dart';
 import 'package:intl/intl.dart' as intl; 
-
+import 'package:todolist/Controllers/databasehelper.dart'; 
+import 'addtaskstomorrow.dart'; 
 class TomorrowPage extends StatefulWidget {
   TomorrowPage({Key key}) : super(key: key);
 
@@ -11,13 +12,27 @@ class TomorrowPage extends StatefulWidget {
 }
   
 
- 
-class TomorrowPageState extends State<TomorrowPage> { 
-  DateTime _currentDate2 = new DateTime.now(); 
+
+
+class TomorrowPageState extends State<TomorrowPage> {
+
+   static DateTime tomorrow() {
+    DateTime now = DateTime.now();
+    return DateTime(
+      now.year,
+      now.month,
+      now.day + 1,
+    );
+  }
+
+    DatabaseHelper db=  DatabaseHelper(); 
+
+
+
   @override
   Widget build(BuildContext context) {
-       String formatDate2 = intl.DateFormat('yyyy-MM-dd').format(_currentDate2); 
-      String formatDay2 = intl.DateFormat('EEEE').format(_currentDate2); 
+       String formatDate2 = intl.DateFormat('yyyy-MM-dd').format(tomorrow()); 
+      String formatDay2 = intl.DateFormat('EEEE').format(tomorrow()); 
     return Scaffold(  
         //extendBodyBehindAppBar: true, 
           drawer: drawerwidget(context),       
@@ -107,7 +122,13 @@ class TomorrowPageState extends State<TomorrowPage> {
           right: 20.0, 
           //bottom: 55.0, 
           child:RawMaterialButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.of(context).push(
+              new MaterialPageRoute( 
+                builder: (BuildContext context) => new AddTaskTomorrow(),
+              )
+          ); 
+            },
             elevation: 2.0,
             //fillColor: Colors.green, 
             child:  Image(

@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:todolist/Controllers/databasehelper.dart'; 
 import 'package:todolist/widgets/drawer.dart';
 import 'package:intl/intl.dart' as intl; 
-
+import 'package:flutter_slidable/flutter_slidable.dart'; 
+import 'addtask.dart'; 
 class TodayPage extends StatefulWidget {
   TodayPage({Key key}) : super(key: key);
 
@@ -14,10 +16,27 @@ class TodayPage extends StatefulWidget {
  
 class TodayPageState extends State<TodayPage> {
   DateTime _currentDate = new DateTime.now(); 
+final TextEditingController taskController = new TextEditingController();  
+  List listoftasks=[]; 
+    DatabaseHelper db=  DatabaseHelper(); 
+
+
+@override 
+void initState() {
+    super.initState();
+     db.getTodyTasks().then((value) {
+      setState(() {
+        listoftasks = value;
+
+      });
+    });
+} 
+
+    
   @override
   Widget build(BuildContext context) { 
-     var h = MediaQuery.of(context).size.height; 
-    var w = MediaQuery.of(context).size.width; 
+     //var h = MediaQuery.of(context).size.height; 
+     //var w = MediaQuery.of(context).size.width; 
        String formatDate = intl.DateFormat('yyyy-MM-dd').format(_currentDate); 
       String formatDay = intl.DateFormat('EEEE').format(_currentDate); 
     return Scaffold(  
@@ -25,22 +44,54 @@ class TodayPageState extends State<TodayPage> {
           drawer: drawerwidget(context),       
       appBar:  _appBar(AppBar().preferredSize.height, formatDate, formatDay), 
       
-      body: Container(
-    
-    
-    child: ListView( 
-    padding: EdgeInsets.all(12.0), 
-    scrollDirection: Axis.vertical, 
-    children: <Widget>[ 
-         Column(
-             children: <Widget>[
+      body: Container( 
 
-             ]
-         )
-                
+  child: ListView.builder(
+                itemCount:(listoftasks.length), 
+                itemBuilder: (BuildContext context, int position) {
+                  return Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+
+                  secondaryActions: [
+                  IconSlideAction(
+                  color:Colors.redAccent,
+                  icon:Icons.delete ,
+                  foregroundColor:Colors.black,
+                  onTap: () {
+                 
+                   }, 
+                  ), 
+
+                  ], 
+                  child: Row( 
+                    crossAxisAlignment: CrossAxisAlignment.center,  
+    children: <Widget>[ 
+      Container(
+        child:   Text('task1: ${listoftasks[position].name}', 
+           style: TextStyle(
+                color:  Color(0xff333333),
+                fontWeight: FontWeight.w500,
+                fontFamily: "RobotoBold",
+                //fontStyle:  FontStyle.normal,
+                fontSize: 23.0, 
+            ), 
+          
+          ), 
+      ), 
     ], 
-      ), 
-      ), 
+), 
+                  ); 
+       
+       
+
+
+                }), 
+
+
+),                          
+  
+       
+    
     
 
     );
@@ -118,7 +169,11 @@ class TodayPageState extends State<TodayPage> {
           //bottom: 55.0, 
           child:RawMaterialButton(
             onPressed: () {
-              
+             Navigator.of(context).push(
+              new MaterialPageRoute( 
+                builder: (BuildContext context) => new AddTask(),
+              )
+          ); 
             },
             elevation: 2.0,
             //fillColor: Colors.green, 
@@ -142,9 +197,7 @@ class TodayPageState extends State<TodayPage> {
 
 
 
-
-
-
+ 
 
 
 

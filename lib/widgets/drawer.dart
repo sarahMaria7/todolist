@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist/Controllers/databasehelper.dart';
 import 'package:todolist/screens/signin.dart';
-
+import 'package:todolist/screens/todaypage.dart'; 
+import 'package:todolist/screens/tomorrowpage.dart';  
 Widget drawerwidget(BuildContext context) {
 
 
@@ -68,7 +69,13 @@ Widget drawerwidget(BuildContext context) {
                           fontWeight: FontWeight.bold), 
                             //textAlign: TextAlign.center,  
                     ),
-                    onTap: () {},
+                    onTap: () {
+                       Navigator.of(context).push(
+                        new MaterialPageRoute(
+                          builder: (BuildContext context) => new TodayPage(),
+                        )
+                    ); 
+                    },
                   ), 
 
                   ListTile(
@@ -80,7 +87,13 @@ Widget drawerwidget(BuildContext context) {
                           fontSize: 15,
                           fontWeight: FontWeight.bold),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                       Navigator.of(context).push(
+                        new MaterialPageRoute(
+                          builder: (BuildContext context) => new TomorrowPage(),
+                        )
+                    ); 
+                    },
                   ),
         
        Padding(padding: EdgeInsets.only(top: 190)),

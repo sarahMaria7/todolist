@@ -32,7 +32,8 @@ class LoginPageState extends State<LoginPage1> {
 
   @override
   initState(){
-    read();
+    read(); 
+    super.initState(); 
   }
 
 
