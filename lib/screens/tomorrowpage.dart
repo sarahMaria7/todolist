@@ -56,7 +56,7 @@ class TomorrowPageState extends State<TomorrowPage> {
 
 
  _appBar(height, fdate2, frday2) => PreferredSize(
-    preferredSize:  Size(MediaQuery.of(context).size.width, height + 185.0 ),
+    preferredSize:  Size(MediaQuery.of(context).size.width, height + 200.0 ),
     child: Stack(
       children: <Widget>[ 
 
