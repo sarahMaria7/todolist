@@ -5,7 +5,7 @@ import 'package:todolist/screens/signin.dart';
 import 'package:todolist/screens/todaypage.dart'; 
 import 'package:todolist/screens/tomorrowpage.dart';  
 Widget drawerwidget(BuildContext context) {
-
+ DatabaseHelper db=  DatabaseHelper(); 
 
   _save(String token) async {
     final prefs = await SharedPreferences.getInstance();
@@ -108,7 +108,8 @@ Widget drawerwidget(BuildContext context) {
                     textAlign: TextAlign.end, 
               ),
               onTap: () {
-                _save('0');
+                //db.logout(); 
+              _save('0'); 
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginPage1()));
 

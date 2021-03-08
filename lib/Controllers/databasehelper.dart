@@ -52,16 +52,41 @@ class DatabaseHelper{
     status = response.body.contains('error');
 
     var data = json.decode(response.body);
-          
-  
+   
+             
     if(status){
       print('data : ${data["error"]}');
     }else{
       print('data : ${data["access_token"]}');
-      _save(data["access_token"]);
+      //_save(data["access_token"]);
     }
 
-  }
+  } 
+
+
+
+
+  logout() async{  
+      String myUrl = "$serverUrl/logout"; 
+      final prefs = await SharedPreferences.getInstance();
+     final key = 'token';
+     final value = prefs.get(key ) ?? 0; 
+
+      final response = await http.post(myUrl,
+            headers: {'Accept':'application/json',
+                      'Authorization' : 'Bearer $value'},                      
+          ); 
+                var data = json.decode(response.body); 
+                var message = data["message"]; 
+                print("this is logout $message"); 
+        
+                prefs.remove(token); 
+                
+
+  } 
+
+
+
 
   resetPassword(String email) async{
     String myUrl = "$serverUrl/password/email";
@@ -91,20 +116,20 @@ Future<List<Task>> getTodyTasks()async{
     try{
       http.Response res= await http.post(myUrl,
         headers: { "Accept": 'application/json',
-          'Authorization': 'bearer $value'},
+          'Authorization': 'Bearer $value'},
         body: {
             "timeZone":"Africa/Algiers"
         }
       );
-     var data=  json.decode(res.body);
-
+     var data =  json.decode(res.body);
+      //print("data to do list: $data"); 
      List l=data["data"];
-    for (var i=0;i<l.length;i++){
+    for (var i=0;i<l.length;i++){ 
       var t= Task.fromJson(l[i]);
       tasklist.add(t);
     }
-
-    }
+    //print("afficher list: ${tasklist[0].name}"); 
+           }
     catch(e) {}
     return tasklist;
 
@@ -121,10 +146,10 @@ Future<List<Task>> getTomorrowTasks()async{
     try{
       http.Response res= await http.get(myUrl,
         headers: { "Accept": 'application/json',
-          'Authorization': 'bearer $value'}, 
+          'Authorization': 'Bearer $value'}, 
       );
      var data=  json.decode(res.body);
-
+     print(data); 
      List l2=data["data"];
     for (var i=0;i<l2.length;i++){
       var t2= Task.fromJson(l2[i]);
@@ -153,20 +178,26 @@ Future<List<Task>> getTomorrowTasks()async{
 
 
   //
-  // Future<List> getData() async{
-  //
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final key = 'token';
-  //   final value = prefs.get(key ) ?? 0;
-  //
-  //   String myUrl = "$serverUrl/products/";
-  //   http.Response response = await http.get(myUrl,
-  //       headers: {
-  //         'Accept':'application/json',
-  //         'Authorization' : 'Bearer $value'
-  //       });
-  //   return json.decode(response.body);
-  // }
+   Future<List> getData() async{
+  
+     final prefs = await SharedPreferences.getInstance();
+     final key = 'token';
+     final value = prefs.get(key ) ?? 0;
+  
+    String myUrl = "$serverUrl/tasks/todayTask";
+   http.Response res= await http.post(myUrl,
+        headers: { "Accept": 'application/json',
+          'Authorization': 'Bearer $value'},
+        body: {
+            "timeZone":"Africa/Algiers"
+        }
+      ); 
+      var data = json.decode(res.body); 
+      print("data : $data"); 
+      var lt = data['data']; 
+      print("liste data : $lt"); 
+     return lt;  
+   }
   //
   // void deleteData(int id) async {
   //   final prefs = await SharedPreferences.getInstance();
@@ -255,7 +286,8 @@ void addDataTomorrow(String name) async {
     final prefs = await SharedPreferences.getInstance();
     final key = 'token';
     final value = token;
-    prefs.setString(key, value);
+    prefs.setString(key, value); 
+    
   }
 
 

@@ -19,7 +19,7 @@ class TodayPageState extends State<TodayPage> {
 final TextEditingController taskController = new TextEditingController();  
   List listoftasks=[]; 
     DatabaseHelper db=  DatabaseHelper(); 
-
+int selectedRadioTile; 
 
 @override 
 void initState() {
@@ -27,11 +27,21 @@ void initState() {
      db.getTodyTasks().then((value) {
       setState(() {
         listoftasks = value;
-
+        
       });
-    });
+    }); 
+    //db.getData(); 
+    //db.read(); 
+   //db.getTodyTasks(); 
+   selectedRadioTile = 0;  
 } 
 
+setSelectedRadioTile(int val){
+  setState(() {
+   selectedRadioTile = val; 
+
+  }); 
+}
     
   @override
   Widget build(BuildContext context) { 
@@ -45,10 +55,12 @@ void initState() {
       appBar:  _appBar(AppBar().preferredSize.height, formatDate, formatDay), 
       
       body: Container( 
-
-  child: ListView.builder(
+          padding: EdgeInsets.all(15.0), 
+  child: ListView.builder( 
+    scrollDirection: Axis.vertical, 
                 itemCount:(listoftasks.length), 
-                itemBuilder: (BuildContext context, int position) {
+                itemBuilder: (BuildContext context, int position) { 
+           
                   return Slidable(
                       actionPane: SlidableDrawerActionPane(),
 
@@ -66,9 +78,12 @@ void initState() {
                   child: Row( 
                     crossAxisAlignment: CrossAxisAlignment.center,  
     children: <Widget>[ 
-      Container(
-        child:   Text('task1: ${listoftasks[position].name}', 
-           style: TextStyle(
+      Expanded( 
+        child: RadioListTile(
+          value:  listoftasks[position], 
+          groupValue: selectedRadioTile, 
+          title: Text('${listoftasks[position].name}', 
+              style: TextStyle(
                 color:  Color(0xff333333),
                 fontWeight: FontWeight.w500,
                 fontFamily: "RobotoBold",
@@ -77,7 +92,16 @@ void initState() {
             ), 
           
           ), 
+          onChanged: (val){
+            setSelectedRadioTile(val); 
+          }, 
+          activeColor: Colors.green,    
+        ), 
+       
       ), 
+
+
+
     ], 
 ), 
                   ); 
