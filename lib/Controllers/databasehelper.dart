@@ -122,7 +122,6 @@ Future<List<Task>> getTodyTasks()async{
             "timeZone":"Africa/Algiers"
         }
       );
-<<<<<<< HEAD
      var data=  json.decode(res.body);
 
      List l=data["data"]["name"];
@@ -135,18 +134,6 @@ Future<List<Task>> getTodyTasks()async{
     catch(e) {
       print(e.toString);
     }
-=======
-     var data =  json.decode(res.body);
-      //print("data to do list: $data"); 
-     List l=data["data"];
-    for (var i=0;i<l.length;i++){ 
-      var t= Task.fromJson(l[i]);
-      tasklist.add(t);
-    }
-    //print("afficher list: ${tasklist[0].name}"); 
-           }
-    catch(e) {}
->>>>>>> b1967ee1163f02f8e7570be1ec71d9a1a0158e3f
     return tasklist;
 
 
