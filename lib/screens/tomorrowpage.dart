@@ -26,8 +26,18 @@ class TomorrowPageState extends State<TomorrowPage> {
   }
 
     DatabaseHelper db=  DatabaseHelper(); 
+  List listoftasksTm=[]; 
+@override 
+void initState() {
+    super.initState();
+     db.getTomorrowTasks().then((value) {
+      setState(() {
+        listoftasksTm = value;
+        
+      });
+    }); 
 
-
+} 
 
   @override
   Widget build(BuildContext context) {

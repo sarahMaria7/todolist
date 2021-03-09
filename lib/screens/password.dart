@@ -17,7 +17,30 @@ class PasswordState extends State<Password> {
   String msgStatus = '';
 
   final TextEditingController _emailController = new TextEditingController();
+void _showDialog(){ 
+    showDialog(
+        context:context ,
+        builder:(BuildContext context){
+          return AlertDialog(
+            title: new Text('Code Sent'),
+            content:  new Text('Check your email box'),
+            actions: <Widget>[
+              new RaisedButton(
 
+                child: new Text(
+                  'Close',
+                ),
+
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+
+              ),
+            ],
+          );
+        }
+    );
+  } 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +107,8 @@ class PasswordState extends State<Password> {
                   height: 60,
                   onPressed: () {
 
-                    databaseHelper.resetPassword(_emailController.text.trim());
+                    databaseHelper.sendVerifiedEmail(_emailController.text.trim().toLowerCase()); 
+                       _showDialog(); 
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -114,6 +138,7 @@ class PasswordState extends State<Password> {
     );
   }
 }
+ 
 
 // we will be creating a widget for text field
 Widget inputFile({label, obscureText = false}) {

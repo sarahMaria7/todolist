@@ -88,21 +88,23 @@ class DatabaseHelper{
 
 
 
-  resetPassword(String email) async{
+sendVerifiedEmail(String email) async{
     String myUrl = "$serverUrl/password/email";
-    final response = await  http.post(myUrl,
+    final response = await  http.post(myUrl, 
+     headers: {'Accept':'application/json'},  
         body: {
           "email": "$email",
         } ) ;
     status = response.body.contains('error');
 
     var data = json.decode(response.body);
-
+   
+             
     if(status){
       print('data : ${data["error"]}');
     }else{
-      print('data : ${data["token"]}');
-      _save(data["token"]);
+      print('data : ${data["message"]}');
+      //_save(data["access_token"]);
     }
 
   }
@@ -281,6 +283,7 @@ void addDataTomorrow(String name) async {
   //
   //
   //
+
 
   _save(String token) async {
     final prefs = await SharedPreferences.getInstance();
