@@ -72,7 +72,7 @@ class AddTaskState extends State<AddTask> {
 
               Container(
                 height: 50,
-                child: new RaisedButton(
+                child: new ElevatedButton(
                   onPressed: (){
                     db.addData(
                         _nameController.text.trim());
@@ -82,7 +82,8 @@ class AddTaskState extends State<AddTask> {
                         )
                     );
                   },
-                  color: Color(0xff7718b9), 
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xff7718b9))),
+                  //color: Color(0xff7718b9), 
                   child: new Text(
                     'Add',
                     style: new TextStyle(

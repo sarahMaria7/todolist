@@ -42,7 +42,7 @@ class SignupPageState extends State<SignupPage> {
             print('if');
           }else{
             print('else');
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => TodayPage()));
           }
         });
@@ -59,7 +59,7 @@ class SignupPageState extends State<SignupPage> {
             title: new Text('Failed'),
             content:  new Text('Check your email or password'),
             actions: <Widget>[
-              new RaisedButton(
+              new ElevatedButton(
 
                 child: new Text(
                   'Close',
@@ -81,7 +81,7 @@ class SignupPageState extends State<SignupPage> {
     final key = 'token';
     final value = prefs.get(key ) ?? 0;
     if(value != '0'){
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
           new MaterialPageRoute(
             builder: (BuildContext context) => new TodayPage(),
           )
@@ -171,7 +171,7 @@ class SignupPageState extends State<SignupPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context,
+                      Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => LoginPage1()));
                     },
                     child: Text(

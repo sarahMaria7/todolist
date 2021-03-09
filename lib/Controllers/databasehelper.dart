@@ -33,7 +33,7 @@ class DatabaseHelper{
 
   }
 
-  registerData(String name ,String email , String password, String password_confirmation) async{ 
+  registerData(String name ,String email , String password, String passwordConfirmation) async{ 
   
     String myUrl = "$serverUrl/register"; 
  
@@ -46,8 +46,8 @@ class DatabaseHelper{
           "name": name,
           "email": email,
           "password" : password,
-          "password_confirmation":password_confirmation
-        } ) ; 
+          "password_confirmation":passwordConfirmation
+        } );//.then( sendEmailVarificatio()) ; 
   
     status = response.body.contains('error');
 
@@ -83,11 +83,12 @@ class DatabaseHelper{
   }
 
 Future<List<Task>> getTodyTasks()async{
-    List tasklist=List<Task>();
+    //List tasklist=List<Task>();
+    List<Task> tasklist = List<Task>.empty(growable: true);
     String myUrl= "$serverUrl/tasks/todayTask"; 
   final prefs = await SharedPreferences.getInstance();  
   final key = 'token'; 
-  final value = prefs.get(key ) ?? 0; 
+  final value = prefs.get(key) ?? 0; 
     try{
       http.Response res= await http.post(myUrl,
         headers: { "Accept": 'application/json',
@@ -98,14 +99,16 @@ Future<List<Task>> getTodyTasks()async{
       );
      var data=  json.decode(res.body);
 
-     List l=data["data"];
+     List l=data["data"]["name"];
     for (var i=0;i<l.length;i++){
       var t= Task.fromJson(l[i]);
       tasklist.add(t);
     }
 
     }
-    catch(e) {}
+    catch(e) {
+      print(e.toString);
+    }
     return tasklist;
 
 
@@ -113,7 +116,7 @@ Future<List<Task>> getTodyTasks()async{
 
 
 Future<List<Task>> getTomorrowTasks()async{
-    List tasklist2=List<Task>();
+    List<Task> tasklist2 = List<Task>.empty(growable: true);
     String myUrl= "$serverUrl/tasks/tomorrowTask"; 
   final prefs = await SharedPreferences.getInstance();  
   final key = 'token'; 

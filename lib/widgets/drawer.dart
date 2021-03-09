@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todolist/Controllers/databasehelper.dart';
+//import 'package:todolist/Controllers/databasehelper.dart';
 import 'package:todolist/screens/signin.dart';
 import 'package:todolist/screens/todaypage.dart'; 
 import 'package:todolist/screens/tomorrowpage.dart';  
@@ -109,7 +109,7 @@ Widget drawerwidget(BuildContext context) {
               ),
               onTap: () {
                 _save('0');
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => LoginPage1()));
 
 
