@@ -33,7 +33,7 @@ class DatabaseHelper{
 
   }
 
-  registerData(String name ,String email , String password, String password_confirmation) async{ 
+  registerData(String name ,String email , String password, String passwordConfirmation) async{ 
   
     String myUrl = "$serverUrl/register"; 
  
@@ -46,8 +46,8 @@ class DatabaseHelper{
           "name": name,
           "email": email,
           "password" : password,
-          "password_confirmation":password_confirmation
-        } ) ; 
+          "password_confirmation":passwordConfirmation
+        } );//.then( sendEmailVarificatio()) ; 
   
     status = response.body.contains('error');
 
@@ -110,11 +110,12 @@ sendVerifiedEmail(String email) async{
   }
 
 Future<List<Task>> getTodyTasks()async{
-    List tasklist=List<Task>();
+    //List tasklist=List<Task>();
+    List<Task> tasklist = List<Task>.empty(growable: true);
     String myUrl= "$serverUrl/tasks/todayTask"; 
   final prefs = await SharedPreferences.getInstance();  
   final key = 'token'; 
-  final value = prefs.get(key ) ?? 0; 
+  final value = prefs.get(key) ?? 0; 
     try{
       http.Response res= await http.post(myUrl,
         headers: { "Accept": 'application/json',
@@ -123,6 +124,20 @@ Future<List<Task>> getTodyTasks()async{
             "timeZone":"Africa/Algiers"
         }
       );
+<<<<<<< HEAD
+     var data=  json.decode(res.body);
+
+     List l=data["data"]["name"];
+    for (var i=0;i<l.length;i++){
+      var t= Task.fromJson(l[i]);
+      tasklist.add(t);
+    }
+
+    }
+    catch(e) {
+      print(e.toString);
+    }
+=======
      var data =  json.decode(res.body);
       //print("data to do list: $data"); 
      List l=data["data"];
@@ -133,6 +148,7 @@ Future<List<Task>> getTodyTasks()async{
     //print("afficher list: ${tasklist[0].name}"); 
            }
     catch(e) {}
+>>>>>>> b1967ee1163f02f8e7570be1ec71d9a1a0158e3f
     return tasklist;
 
 
@@ -140,7 +156,7 @@ Future<List<Task>> getTodyTasks()async{
 
 
 Future<List<Task>> getTomorrowTasks()async{
-    List tasklist2=List<Task>();
+    List<Task> tasklist2 = List<Task>.empty(growable: true);
     String myUrl= "$serverUrl/tasks/tomorrowTask"; 
   final prefs = await SharedPreferences.getInstance();  
   final key = 'token'; 

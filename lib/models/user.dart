@@ -2,8 +2,8 @@ class User {
     String _token; 
     int    _id; 
     String _email; 
-    String _old_password; 
-    String _new_password; 
+    String _oldPassword; 
+    String _newPassword; 
 
 
 User(this._email);
@@ -13,15 +13,15 @@ User(this._email);
   String get token         => _token;
   int    get id            => _id;
   String get email         =>_email;
-  String get old_password   => _old_password;
-  String get new_password   => _new_password;
+  String get oldPassword   => _oldPassword;
+  String get newPassword   => _newPassword;
 
   
   set setToken(String token)             => _token = token;
   set setId(int id)                      => _id = id;
   set setEmail(String email)             => _email = email;
-  set setOldPwd(String old_password)     => _old_password = old_password;
-  set setNewPwd(String new_password)     => _new_password = new_password;
+  set setOldPwd(String oldPassword)     => _oldPassword = oldPassword;
+  set setNewPwd(String newPassword)     => _newPassword = newPassword;
 
   User.fromJson(Map<String, dynamic> map){
    _id     = map["id"];
@@ -33,8 +33,8 @@ User(this._email);
   Map<String, dynamic> toMap(){
     Map map = Map<String, dynamic>();
    map["email"]  = _email ; 
-   map["password"]  = _old_password ; 
-   map["password_confirmation"]  = _new_password ; 
+   map["password"]  = _oldPassword ; 
+   map["password_confirmation"]  = _newPassword ; 
 
    return map;
  }

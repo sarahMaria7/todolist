@@ -22,7 +22,7 @@ class LoginPageState extends State<LoginPage1> {
     final key = 'token';
     final value = prefs.get(key ) ?? 0;
     if(value != '0'){
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
           new MaterialPageRoute(
             builder: (BuildContext context) => new TodayPage(),
           )
@@ -56,7 +56,7 @@ class LoginPageState extends State<LoginPage1> {
             msgStatus = 'Check email or password';
           }else{
             print('else');
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => TodayPage()));
           }
         });
@@ -72,7 +72,7 @@ class LoginPageState extends State<LoginPage1> {
             title: new Text('Failed'),
             content:  new Text('Check your email or password'),
             actions: <Widget>[
-              new RaisedButton(
+              new ElevatedButton(
 
                 child: new Text(
                   'Close',
@@ -126,7 +126,7 @@ class LoginPageState extends State<LoginPage1> {
                       inputFile(label: "Password", obscureText: true,controller: _passwordController),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Password()));
@@ -181,7 +181,7 @@ class LoginPageState extends State<LoginPage1> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SignupPage()));
