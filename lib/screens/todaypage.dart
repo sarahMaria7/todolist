@@ -13,10 +13,18 @@ class TodayPage extends StatefulWidget {
 }
 
 class TodayPageState extends State<TodayPage> {
+<<<<<<< HEAD
   DateTime _currentDate = new DateTime.now();
   final TextEditingController taskController = new TextEditingController();
   List listoftasks = [];
   DatabaseHelper db = DatabaseHelper();
+=======
+  DateTime _currentDate = new DateTime.now(); 
+final TextEditingController taskController = new TextEditingController();  
+  List listoftasks=[]; 
+    DatabaseHelper db=  DatabaseHelper(); 
+int selectedRadioTile; 
+>>>>>>> b1967ee1163f02f8e7570be1ec71d9a1a0158e3f
 
   @override
   void initState() {
@@ -26,6 +34,7 @@ class TodayPageState extends State<TodayPage> {
     /*then((value) {
       setState(() {
         listoftasks = value;
+<<<<<<< HEAD
       });
     });*/
   }
@@ -75,6 +84,99 @@ class TodayPageState extends State<TodayPage> {
               );
             }),
       ),
+=======
+        
+      });
+    }); 
+    //db.getData(); 
+    //db.read(); 
+   //db.getTodyTasks(); 
+   selectedRadioTile = 0;  
+} 
+
+setSelectedRadioTile(int val){
+  setState(() {
+   selectedRadioTile = val; 
+
+  }); 
+}
+    
+  @override
+  Widget build(BuildContext context) { 
+     //var h = MediaQuery.of(context).size.height; 
+     //var w = MediaQuery.of(context).size.width; 
+       String formatDate = intl.DateFormat('yyyy-MM-dd').format(_currentDate); 
+      String formatDay = intl.DateFormat('EEEE').format(_currentDate); 
+    return Scaffold(  
+        //extendBodyBehindAppBar: true, 
+          drawer: drawerwidget(context),       
+      appBar:  _appBar(AppBar().preferredSize.height, formatDate, formatDay), 
+      
+      body: Container( 
+          padding: EdgeInsets.all(15.0), 
+  child: ListView.builder( 
+    scrollDirection: Axis.vertical, 
+                itemCount:(listoftasks.length), 
+                itemBuilder: (BuildContext context, int position) { 
+           
+                  return Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+
+                  secondaryActions: [
+                  IconSlideAction(
+                  color:Colors.redAccent,
+                  icon:Icons.delete ,
+                  foregroundColor:Colors.black,
+                  onTap: () {
+                 
+                   }, 
+                  ), 
+
+                  ], 
+                  child: Row( 
+                    crossAxisAlignment: CrossAxisAlignment.center,  
+    children: <Widget>[ 
+      Expanded( 
+        child: RadioListTile(
+          value:  listoftasks[position], 
+          groupValue: selectedRadioTile, 
+          title: Text('${listoftasks[position].name}', 
+              style: TextStyle(
+                color:  Color(0xff333333),
+                fontWeight: FontWeight.w500,
+                fontFamily: "RobotoBold",
+                //fontStyle:  FontStyle.normal,
+                fontSize: 23.0, 
+            ), 
+          
+          ), 
+          onChanged: (val){
+            setSelectedRadioTile(val); 
+          }, 
+          activeColor: Colors.green,    
+        ), 
+       
+      ), 
+
+
+
+    ], 
+), 
+                  ); 
+       
+       
+
+
+                }), 
+
+
+),                          
+  
+       
+    
+    
+
+>>>>>>> b1967ee1163f02f8e7570be1ec71d9a1a0158e3f
     );
   }
 
