@@ -131,7 +131,7 @@ Future<List<Task>> getTodyTasks()async{
       var t= Task.fromJson(l[i]);
       tasklist.add(t);
     }
-    //print("afficher list: ${tasklist[0].name}"); 
+    print("afficher list: ${tasklist[0].name}"); 
            }
     catch(e) {}
     return tasklist;
