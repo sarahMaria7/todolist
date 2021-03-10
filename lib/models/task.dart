@@ -3,12 +3,13 @@ int _id;
 String _name; 
 int _isCompleted; 
 
+
 Task(this._id, this._name, this._isCompleted); 
 
 
 int    get id   => _id;
 String  get name   => _name;
-int get isComleted       => _isCompleted; 
+int get isCompleted       => _isCompleted; 
 
 
  set setId(int id)  => _id = id;

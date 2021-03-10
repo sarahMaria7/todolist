@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:todolist/Controllers/databasehelper.dart';
+import 'package:todolist/screens/signin.dart';
 import 'varification.dart';
 
 class Password extends StatefulWidget {
@@ -60,7 +61,10 @@ void _showDialog(){
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+             Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage1()));
           },
           icon: Icon(
             Icons.arrow_back_ios,

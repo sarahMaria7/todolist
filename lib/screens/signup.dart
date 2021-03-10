@@ -41,14 +41,9 @@ class SignupPageState extends State<SignupPage> {
             msgStatus = 'Check email or password';
             print('if');
           }else{
-<<<<<<< HEAD
             print('else');
             Navigator.pushReplacement(context,
-=======
-            print('else'); 
-            Navigator.push(context,
->>>>>>> b1967ee1163f02f8e7570be1ec71d9a1a0158e3f
-                MaterialPageRoute(builder: (context) => TodayPage()));
+                MaterialPageRoute(builder: (context) => LoginPage1()));
           }
         });
       }

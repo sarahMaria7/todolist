@@ -48,11 +48,35 @@ void initState() {
           drawer: drawerwidget(context),       
       appBar:  _appBar(AppBar().preferredSize.height, formatDate2, formatDay2), 
       
-      body: ListView( 
-    padding: EdgeInsets.all(12.0), 
-    scrollDirection: Axis.vertical, 
-    children: <Widget>[ 
-
+      body: Column( 
+           crossAxisAlignment: CrossAxisAlignment.start, 
+                children:  <Widget>[ 
+                    (listoftasksTm.length == 0)? Center(
+                       child: Column( 
+            //mainAxisAlignment: MainAxisAlignment.start,  
+            children: <Widget>[ 
+              SizedBox(height: 55.0), 
+              CircleAvatar(
+                radius: 55.0,
+                backgroundImage: AssetImage('assets/images/paper2.png'), 
+                backgroundColor: Colors.transparent, 
+              ), 
+              SizedBox(height: 15.0), 
+               Container(
+                 child: Text("Don't have task", 
+                 
+                 style: TextStyle(
+                color:  Color(0x805700bb), 
+                fontFamily: "RobotoMedium", 
+                //fontStyle:  FontStyle.normal,
+                fontSize: 19.0, 
+            ), 
+                 ), 
+               ), 
+            ], 
+                       ),  
+                    ): 
+                    Container(), 
                 
     ], 
       ), 

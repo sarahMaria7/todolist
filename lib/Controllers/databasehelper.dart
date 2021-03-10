@@ -33,7 +33,7 @@ class DatabaseHelper{
 
   }
 
-  registerData(String name ,String email , String password, String passwordConfirmation) async{ 
+  registerData(String name ,String email , String password, String password_confirmation) async{ 
   
     String myUrl = "$serverUrl/register"; 
  
@@ -46,8 +46,8 @@ class DatabaseHelper{
           "name": name,
           "email": email,
           "password" : password,
-          "password_confirmation":passwordConfirmation
-        } );//.then( sendEmailVarificatio()) ; 
+          "password_confirmation":password_confirmation
+        } ) ; 
   
     status = response.body.contains('error');
 
@@ -91,7 +91,8 @@ class DatabaseHelper{
 sendVerifiedEmail(String email) async{
     String myUrl = "$serverUrl/password/email";
     final response = await  http.post(myUrl, 
-     headers: {'Accept':'application/json'},  
+     headers: {'Accept':'application/json',
+                      },  
         body: {
           "email": "$email",
         } ) ;
@@ -110,13 +111,12 @@ sendVerifiedEmail(String email) async{
   }
 
 Future<List<Task>> getTodyTasks()async{
-    //List tasklist=List<Task>();
-    List<Task> tasklist = List<Task>.empty(growable: true);
+    List tasklist=List<Task>();
     String myUrl= "$serverUrl/tasks/todayTask"; 
   final prefs = await SharedPreferences.getInstance();  
   final key = 'token'; 
-  final value = prefs.get(key) ?? 0; 
-    try{
+  final value = prefs.get(key ) ?? 0; 
+    try{ 
       http.Response res= await http.post(myUrl,
         headers: { "Accept": 'application/json',
           'Authorization': 'Bearer $value'},
@@ -124,21 +124,7 @@ Future<List<Task>> getTodyTasks()async{
             "timeZone":"Africa/Algiers"
         }
       );
-<<<<<<< HEAD
-     var data=  json.decode(res.body);
-
-     List l=data["data"]["name"];
-    for (var i=0;i<l.length;i++){
-      var t= Task.fromJson(l[i]);
-      tasklist.add(t);
-    }
-
-    }
-    catch(e) {
-      print(e.toString);
-    }
-=======
-     var data =  json.decode(res.body);
+     var data =  json.decode(res.body); 
       //print("data to do list: $data"); 
      List l=data["data"];
     for (var i=0;i<l.length;i++){ 
@@ -148,7 +134,6 @@ Future<List<Task>> getTodyTasks()async{
     //print("afficher list: ${tasklist[0].name}"); 
            }
     catch(e) {}
->>>>>>> b1967ee1163f02f8e7570be1ec71d9a1a0158e3f
     return tasklist;
 
 
@@ -156,7 +141,7 @@ Future<List<Task>> getTodyTasks()async{
 
 
 Future<List<Task>> getTomorrowTasks()async{
-    List<Task> tasklist2 = List<Task>.empty(growable: true);
+    List tasklist2=List<Task>();
     String myUrl= "$serverUrl/tasks/tomorrowTask"; 
   final prefs = await SharedPreferences.getInstance();  
   final key = 'token'; 
@@ -217,21 +202,69 @@ Future<List<Task>> getTomorrowTasks()async{
      return lt;  
    }
   //
-  // void deleteData(int id) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final key = 'token';
-  //   final value = prefs.get(key ) ?? 0;
-  //
-  //   String myUrl = "$serverUrl/products/$id";
-  //   http.delete(myUrl,
-  //       headers: {
-  //         'Accept':'application/json',
-  //         'Authorization' : 'Bearer $value'
-  //       } ).then((response){
-  //     print('Response status : ${response.statusCode}');
-  //     print('Response body : ${response.body}');
-  //   });
-  // }
+  Future<bool> deleteData(int id) async {
+     final prefs = await SharedPreferences.getInstance();
+    final key = 'token';
+     final value = prefs.get(key ) ?? 0;
+     status=false; 
+    String myUrl = "$serverUrl/tasks/destroy/$id";
+    try{
+  http.Response res= await http.delete(myUrl,
+        headers: {
+          'Accept':'application/json',
+         'Authorization' : 'Bearer $value'
+         } ); 
+          var data=json.decode(res.body);
+       status=data["success"];
+      }catch(e){
+
+  }
+  return status;
+   } 
+
+
+
+Future<bool> markAsDone(int id) async {
+     final prefs = await SharedPreferences.getInstance();
+    final key = 'token';
+     final value = prefs.get(key ) ?? 0;
+     status=false; 
+    String myUrl = "$serverUrl/tasks/markDone/$id";
+    try{
+  http.Response res= await http.put(myUrl,
+        headers: {
+          'Accept':'application/json',
+         'Authorization' : 'Bearer $value'
+         } ); 
+          var data=json.decode(res.body);
+       status=data["success"];
+      }catch(e){
+
+  }
+  return status;
+   } 
+Future<bool> unCheckedTask(int id) async {
+     final prefs = await SharedPreferences.getInstance();
+    final key = 'token';
+     final value = prefs.get(key ) ?? 0;
+     status=false; 
+    String myUrl = "$serverUrl/tasks/UncheckeTask/$id";
+    try{
+  http.Response res= await http.put(myUrl,
+        headers: {
+          'Accept':'application/json',
+         'Authorization' : 'Bearer $value'
+         } ); 
+          var data=json.decode(res.body);
+       status=data["success"];
+      }catch(e){
+
+  }
+  return status;
+   } 
+
+
+
   //
    void addData(String name) async {
     final prefs = await SharedPreferences.getInstance();
