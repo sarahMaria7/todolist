@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:todolist/screens/signin.dart';
 import 'varification.dart'; 
 import 'package:todolist/Controllers/databasehelper.dart';
 import 'password.dart'; 
@@ -8,8 +9,10 @@ import 'password.dart';
 
 String pwd = ""; 
 String nwpwd = ""; 
-class CreatePassword extends StatefulWidget {
-  CreatePassword({Key key}) : super(key: key);
+class CreatePassword extends StatefulWidget { 
+ final String s; 
+ final String code; 
+  CreatePassword(this.s, this.code); 
 
   @override
   CreatePasswordState createState() => CreatePasswordState();
@@ -18,6 +21,30 @@ class CreatePassword extends StatefulWidget {
 
 class CreatePasswordState extends State<CreatePassword> {
 DatabaseHelper db = new DatabaseHelper(); 
+void _showDialog(var msg){ 
+    showDialog(
+        context:context ,
+        builder:(BuildContext context){
+          return AlertDialog(
+            title: new Text('check your password'),
+            content:  new Text(msg),
+            actions: <Widget>[
+              new RaisedButton(
+
+                child: new Text(
+                  'Close',
+                ),
+
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+
+              ),
+            ],
+          );
+        }
+    );
+  } 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +102,7 @@ DatabaseHelper db = new DatabaseHelper();
               Column(
                 children: <Widget>[
                   inputFile(label: 'New password', obscureText: true),
-                  inputFile(label: 'Confirm password', obscureText: true),
+                  inputFile2(label: 'Confirm password', obscureText: true),
                 ],
               ),
               Container(
@@ -84,12 +111,13 @@ DatabaseHelper db = new DatabaseHelper();
                   minWidth: double.infinity,
                   height: 60,
                   onPressed: () { 
-                      print(code); 
-                  db.resetPassword(code, s, pwd, nwpwd); 
+                 if(pwd==nwpwd &&!(pwd==''||nwpwd=='')&&(pwd.length>=8||nwpwd.length>=8)){ 
+                       print("code=$code "+ "s=$s "+ "pwd=$pwd "+ "nwpwd=$nwpwd "); 
+              db.resetPassword(code+'lll', s+'lll', pwd, nwpwd); 
                     showDialog(
                         context: context,
                         builder: (_) => Dialog(
-                          insetPadding: EdgeInsets.only(bottom: 240,top: 240,right: 100,left: 100),
+                          insetPadding: EdgeInsets.only(bottom: 120,top: 120,right: 100,left: 100),
                               elevation: 0,
                               backgroundColor: Colors.transparent,
                               child: Column(
@@ -119,8 +147,19 @@ DatabaseHelper db = new DatabaseHelper();
                                 ],
                               ),
                             )).then((value) =>
-                        //سيتم تغيير هذا الاقتران اثناء عملية الربط
-                        Navigator.pop(context));
+                        //سيتم تغيير هذا الاقتران اثناء عملية الربط 
+                        Navigator.pushReplacement( 
+                          context, 
+                          MaterialPageRoute( 
+                            builder: (context)  => LoginPage1())) 
+                            ); 
+                              }else if(pwd!= nwpwd){
+                      _showDialog("Password and Password confirmation must be same as above");
+                    }else if(pwd==""||nwpwd==""){
+                      _showDialog("Password or Password confirmation must be written");
+                    }else if(pwd==nwpwd && pwd.length<8){
+                      _showDialog("Password must be at least 8 characters");
+                    }  
                   },
                   color: Color.fromRGBO(61, 167, 0, 1),
                   elevation: 0,
@@ -156,6 +195,46 @@ Widget inputFile({label, obscureText = false}) {
       TextField( 
         onChanged: (text){
               pwd = text.trim(); 
+         }, 
+        obscureText: obscureText,
+        style: TextStyle(
+          color: Color.fromRGBO(119, 24, 185, 1),
+          fontSize: 20.7,
+        ),
+        decoration: InputDecoration(
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Color.fromRGBO(119, 24, 185, 1),
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Color.fromRGBO(119, 24, 185, 1),
+            ),
+          ),
+          hintText: label,
+          hintStyle: TextStyle(
+              color: Color.fromRGBO(119, 24, 185, 1),
+              fontWeight: FontWeight.w300),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        ),
+      ),
+      SizedBox(
+        height: 10,
+      )
+    ],
+  ); 
+  
+}
+Widget inputFile2({label, obscureText = false}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      SizedBox(
+        height: 5,
+      ),
+      TextField( 
+        onChanged: (text){
               nwpwd = text.trim(); 
          }, 
         obscureText: obscureText,
@@ -185,5 +264,6 @@ Widget inputFile({label, obscureText = false}) {
         height: 10,
       )
     ],
-  );
+  ); 
+  
 }

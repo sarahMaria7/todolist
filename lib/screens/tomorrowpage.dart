@@ -56,9 +56,9 @@ void initState() {
                        child: Column( 
             //mainAxisAlignment: MainAxisAlignment.start,  
             children: <Widget>[ 
-              SizedBox(height: 25.0), 
+              SizedBox(height: 15.0), 
               CircleAvatar(
-                radius: 35.0,
+                radius: 32.0,
                 backgroundImage: AssetImage('assets/images/paper2.png'), 
                 backgroundColor: Colors.transparent, 
               ), 
@@ -107,8 +107,13 @@ void initState() {
                   secondaryActions: [
                   IconSlideAction(
                   color:Color(0xffe8e8e8), 
-                  icon:Icons.delete ,
-                  foregroundColor:Colors.green, 
+                  //icon:Icons.delete , 
+                    iconWidget:  Image.asset(
+                          'assets/images/iconsdelete.png',  
+                          //height: 60.0,
+                          fit: BoxFit.cover,
+                        ),
+                  //foregroundColor:Colors.green, 
                   onTap: () async{
                    var st= await db.deleteData(listoftasksTm[position].id); 
                      if(st==true){
@@ -146,7 +151,7 @@ void initState() {
 ), 
             ), 
                        ), 
-         (position==(listoftasksTm.length-1))? Container(): Divider(thickness: 1, color: Color(0xff43c800)),                    
+         //(position==(listoftasksTm.length-1))? Container(): Divider(thickness: 1, color: Color(0xff43c800)),                    
                      ], 
                   ), 
                   ); 

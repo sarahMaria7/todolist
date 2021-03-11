@@ -73,14 +73,18 @@ class AddTaskState extends State<AddTask> {
               Container(
                 height: 50,
                 child: new ElevatedButton(
-                  onPressed: (){
+                  onPressed: (){ 
+                    if(_nameController.text.trim().length !=0){
+                    
                     db.addData(
                         _nameController.text.trim());
                     Navigator.of(context).push(
                         new MaterialPageRoute(
                           builder: (BuildContext context) => new TodayPage(),
                         )
-                    );
+                    ); 
+                    }
+                    
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xff7718b9))),
                   //color: Color(0xff7718b9), 

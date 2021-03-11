@@ -7,8 +7,11 @@ class DatabaseHelper{
 
   String serverUrl = "https://tranquil-eyrie-84723.herokuapp.com/api";
   var status ;
-  var token ;
-
+  var token ; 
+  bool isTrue = false; 
+  bool get geIsTrue => isTrue; 
+  void setIsTrue(bool isTrue) => this.isTrue = isTrue; 
+ var responseMg; 
   loginData(String email , String password) async{
     String myUrl = "$serverUrl/login";
     final response = await  http.post(myUrl,
@@ -36,8 +39,8 @@ class DatabaseHelper{
   registerData(String name ,String email , String password, String password_confirmation) async{ 
   
     String myUrl = "$serverUrl/register"; 
- 
-         
+
+     
     final response = await  http.post(myUrl,
         headers: {
           'Accept':'application/json'
@@ -52,8 +55,8 @@ class DatabaseHelper{
     status = response.body.contains('error');
 
     var data = json.decode(response.body);
-   
-             
+
+      
     if(status){
       print('data : ${data["error"]}');
     }else{
@@ -99,7 +102,12 @@ sendVerifiedEmail(String email) async{
     status = response.body.contains('error');
 
     var data = json.decode(response.body);
-   
+   if (status){
+     setIsTrue(true);  
+    
+   }else{
+     setIsTrue(false); 
+   }
              
     if(status){
       print('data : ${data["error"]}');
@@ -111,6 +119,7 @@ sendVerifiedEmail(String email) async{
   }
 resetPassword(String code, String email, String pwd, String nwpwd) async{
     String myUrl = "$serverUrl/password/reset"; 
+
     final response = await  http.post(myUrl, 
      headers: {'Accept':'application/json', 
                       },  
@@ -120,18 +129,15 @@ resetPassword(String code, String email, String pwd, String nwpwd) async{
           "password": "$pwd", 
           "password_confirmation": "$nwpwd",
         } ) ;
-    status = response.body.contains('error');
-
+    status = response.body.contains('error'); 
     var data = json.decode(response.body);
-   
-             
+
     if(status){
       print('data : ${data["error"]}');
     }else{
       print('data : ${data["message"]}');
       //_save(data["access_token"]);
-    }
-
+    } 
   }
 
 Future<List<Task>> getTodyTasks()async{
@@ -192,7 +198,31 @@ Future<List<Task>> getTomorrowTasks()async{
 
 
 
+Future<bool> mergeTasks() async{
+String myUrl= "$serverUrl/tasks/mergeTasks"; 
+ final prefs = await SharedPreferences.getInstance();  
+  final key = 'token'; 
+  final value = prefs.get(key ) ?? 0; 
+   status=false; 
+  http.Response res= await http.put(myUrl,
+        headers: { 'Accept': 'application/json',
+          'Authorization': 'Bearer $value'},
+        body: {
+            "timeZone":"Africa/Algiers"
+        }
+      ); 
+  //status = res.body.contains('error'); 
 
+    var data = json.decode(res.body);
+       status=data["success"]; 
+    //if(status){
+      //print('data : ${data["error"]}');
+    //}else{
+      print('data : ${data["success"]}');
+      //_save(data["access_token"]);
+    //} 
+    return status; 
+}
 
 
 
@@ -211,7 +241,7 @@ Future<List<Task>> getTomorrowTasks()async{
      final key = 'token';
      final value = prefs.get(key ) ?? 0;
   
-    String myUrl = "$serverUrl/tasks/todayTask";
+    String myUrl = "$serverUrl/tasks/todayTask"; 
    http.Response res= await http.post(myUrl,
         headers: { "Accept": 'application/json',
           'Authorization': 'Bearer $value'},
@@ -367,7 +397,6 @@ void addDataTomorrow(String name) async {
     prefs.setString(key, value); 
     
   }
-
 
   read() async {
     final prefs = await SharedPreferences.getInstance();

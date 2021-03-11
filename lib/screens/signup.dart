@@ -55,7 +55,13 @@ class SignupPageState extends State<SignupPage> {
         context:context ,
         builder:(BuildContext context){
           return AlertDialog(
-            title: new Text('Failed'),
+            title: new Text('Failed', 
+            style: TextStyle( 
+                      fontSize: 16,
+                      color: Color(0xffeff5fa), 
+                      fontFamily: "RobotoMedium", 
+                    ),
+            ),
             content:  new Text('Check your email or password'),
             actions: <Widget>[
               new ElevatedButton(
@@ -106,7 +112,7 @@ class SignupPageState extends State<SignupPage> {
       appBar: null,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40),
+          padding: EdgeInsets.symmetric(horizontal: 45),
           height: MediaQuery.of(context).size.height - 50,
           width: double.infinity,
           child: Column(

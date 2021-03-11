@@ -4,8 +4,9 @@ import 'package:todolist/Controllers/databasehelper.dart';
 import 'package:todolist/screens/signin.dart';
 import 'varification.dart';
 String s = ""; 
+  DatabaseHelper databaseHelper = new DatabaseHelper();  
 class Password extends StatefulWidget {
-  Password({Key key}) : super(key: key);
+Password({Key key}) : super(key: key);
 
   @override
   PasswordState createState() => PasswordState();
@@ -14,7 +15,7 @@ class Password extends StatefulWidget {
 
 class PasswordState extends State<Password> {
 
-  DatabaseHelper databaseHelper = new DatabaseHelper();
+
   String msgStatus = '';
 
 
@@ -42,6 +43,30 @@ void _showDialog(){
         }
     );
   } 
+  void _showDialog2(){ 
+    showDialog(
+        context:context ,
+        builder:(BuildContext context){
+          return AlertDialog(
+            title: new Text('Error'),
+            content:  new Text('The email must be a valid email address'),
+            actions: <Widget>[
+              new RaisedButton(
+
+                child: new Text(
+                  'Close',
+                ),
+
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+
+              ),
+            ],
+          );
+        }
+    );
+  }  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,15 +135,17 @@ void _showDialog(){
                   minWidth: double.infinity,
                   height: 60,
                   onPressed: () {
-
-                    databaseHelper.sendVerifiedEmail(s); 
-                
-                    Navigator.pushReplacement(
+                if (databaseHelper.geIsTrue == true){
+                  _showDialog2(); 
+                }else{
+                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Varification()));
+                            builder: (context) => Varification(s)));
                                _showDialog(); 
 
+                }
+          
                   },
                   color: Color.fromRGBO(61, 167, 0, 1),
                   elevation: 0,
@@ -152,6 +179,7 @@ Widget inputFile({label, obscureText = false}) {
       TextField( 
         onChanged: (text){
           s = text.trim().toLowerCase(); 
+          databaseHelper.sendVerifiedEmail(s); 
         }, 
         keyboardType: TextInputType.emailAddress,
         obscureText: obscureText,

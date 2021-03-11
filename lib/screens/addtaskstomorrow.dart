@@ -73,14 +73,16 @@ class AddTaskTomorrowState extends State<AddTaskTomorrow> {
               Container(
                 height: 50,
                 child: new ElevatedButton(
-                  onPressed: (){
+                  onPressed: (){ 
+                       if(_nameController.text.trim().length !=0){
                     db.addDataTomorrow(
                         _nameController.text.trim());
                     Navigator.of(context).push(
                         new MaterialPageRoute(
                           builder: (BuildContext context) => new TomorrowPage(),
                         )
-                    );
+                    ); 
+                       } 
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xff7718b9))),
                   //color: Color(0xff7718b9), 

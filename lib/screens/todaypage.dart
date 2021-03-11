@@ -4,8 +4,14 @@ import 'package:todolist/widgets/drawer.dart';
 import 'package:intl/intl.dart' as intl; 
 import 'package:flutter_slidable/flutter_slidable.dart'; 
 import 'addtask.dart'; 
+//import 'package:shared_preferences/shared_preferences.dart'; 
 
-
+DateTime _currentDate = new DateTime.now(); 
+final TextEditingController taskController = new TextEditingController();  
+  List listoftasks=[]; 
+    DatabaseHelper db=  DatabaseHelper(); 
+     List<bool> isChecked; 
+  var refreshKey = GlobalKey<RefreshIndicatorState>(); 
 class TodayPage extends StatefulWidget {
   TodayPage({Key key}) : super(key: key);
 
@@ -17,28 +23,48 @@ class TodayPage extends StatefulWidget {
 
  
 class TodayPageState extends State<TodayPage> {
-  DateTime _currentDate = new DateTime.now(); 
-final TextEditingController taskController = new TextEditingController();  
-  List listoftasks=[]; 
-    DatabaseHelper db=  DatabaseHelper(); 
-     List<bool> isChecked; 
-
+  
+       
 @override 
 void initState() {
     super.initState();
-     db.getTodyTasks().then((value) {
-      setState(() {
-        listoftasks = value;
-           isChecked = List<bool>.generate(listoftasks.length, (int i) => false);
-      });
-    }); 
+      refreshList2(); 
     //db.getData(); 
     //db.read(); 
    //db.getTodyTasks(); 
-
+//db.mergeTasks(); 
 } 
 
+ Future<Null> refreshList2() async {
+    refreshKey.currentState?.show(atTop: false);
+    await Future.delayed(Duration(seconds: 0));
+    db.getTodyTasks().then((value) {
+      setState(() {
+        listoftasks = value;
+        isChecked = List<bool>.generate(listoftasks.length, (int i) => false);
 
+      });
+    });
+    //db.getData();
+    //db.read();
+    //db.getTodyTasks();
+
+    return null;
+  } 
+Future<Null> refreshList() async {
+    refreshKey.currentState?.show(atTop: false);
+    await Future.delayed(Duration(seconds: 0));
+    db.getTodyTasks().then((value) {
+      setState(() {
+        listoftasks = value;
+      });
+    });
+    db.getData();
+    db.read();
+    db.getTodyTasks();
+
+    return null;
+  } 
     
   @override
   Widget build(BuildContext context) { 
@@ -85,8 +111,13 @@ void initState() {
                   secondaryActions: [
                   IconSlideAction(
                   color:Color(0xffe8e8e8), 
-                  icon:Icons.delete ,
-                  foregroundColor:Colors.green, 
+                  //:Icons.delete , 
+                  iconWidget:  Image.asset(
+                          'assets/images/iconsdelete.png',  
+                          //height: 60.0,
+                          fit: BoxFit.cover,
+                        ),
+                  //foregroundColor:Colors.green, 
                   onTap: () async{
                    var s= await db.deleteData(listoftasks[position].id); 
                      if(s==true){
@@ -126,7 +157,7 @@ void initState() {
 ), 
             ), 
                        ), 
-         (position==(listoftasks.length-1))? Container(): Divider(thickness: 1, color: Color(0xff43c800)),                    
+         //(position==(listoftasks.length-1))? Container(): Divider(thickness: 1, color: Color(0xff43c800)),                    
                      ], 
                   ), 
                   ); 
@@ -170,8 +201,13 @@ void initState() {
                   secondaryActions: [
                   IconSlideAction(
                   color:Color(0xffe8e8e8), 
-                  icon:Icons.delete ,
-                  foregroundColor:Colors.green, 
+                  //icon:Icons.delete , 
+                  iconWidget:  Image.asset(
+                          'assets/images/iconsdelete.png',  
+                          //height: 60.0,
+                          fit: BoxFit.cover,
+                        ), 
+                  //foregroundColor:Colors.green, 
                   onTap: () async{
                    var s= await db.deleteData(listoftasks[position].id); 
                      if(s==true){
@@ -194,7 +230,8 @@ void initState() {
               style: TextStyle(
                 color:  Color(0xffa06db2),
                 fontWeight: FontWeight.w500,
-                fontFamily: "RobotoBold",
+                fontFamily: "RobotoBold", 
+                decoration: TextDecoration.lineThrough, 
                 //fontStyle:  FontStyle.normal,
                 fontSize: 16.0, 
             ), 
@@ -211,7 +248,7 @@ void initState() {
 ), 
             ), 
                        ), 
-         (position==(listoftasks.length-1))? Container(): Divider(thickness: 1, color: Color(0xff43c800)),                    
+         //(position==(listoftasks.length-1))? Container(): Divider(thickness: 1, color: Color(0xff43c800)),                    
                      ], 
                   ), 
                   ); 
@@ -244,7 +281,8 @@ void initState() {
           
         var f= await db.markAsDone(listoftasks[index].id); 
                      if(f==true){
-                     setState(() {
+                     setState(() { 
+                            refreshList(); 
             isChecked[index] = !isChecked[index];  
                           });  
                    }
@@ -279,7 +317,8 @@ void initState() {
         onTap: () async {
           bool f = await db.markAsDone(listoftasks[index].id);
           if (f == false) {
-            setState(() {
+            setState(() { 
+                   refreshList(); 
               isChecked[index] = !isChecked[index];
             });
           }

@@ -69,13 +69,19 @@ class LoginPageState extends State<LoginPage1> {
         context:context ,
         builder:(BuildContext context){
           return AlertDialog(
-            title: new Text('Failed'),
+            title: new Text('Failed', 
+            style: TextStyle( 
+                      fontSize: 16,
+                      color: Color(0xffff7718b9), 
+                      fontFamily: "RobotoMedium", 
+                    ),
+                    ),
             content:  new Text('Check your email or password'),
             actions: <Widget>[
               new ElevatedButton(
 
                 child: new Text(
-                  'Close',
+                  'Close', 
                 ),
 
                 onPressed: (){
@@ -106,7 +112,7 @@ class LoginPageState extends State<LoginPage1> {
             Expanded(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
+              children: <Widget>[ 
                 Column(
                   children: <Widget>[
                     Image.asset(
@@ -144,12 +150,12 @@ class LoginPageState extends State<LoginPage1> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  padding: EdgeInsets.symmetric(horizontal: 45),
                   child: Container(
                     padding: EdgeInsets.only(top: 3, left: 3),
                     child: MaterialButton(
                       minWidth: double.infinity,
-                      height: 60,
+                      height: 55.0,
                       onPressed: _onPressed,
                       color: Color.fromRGBO(61, 167, 0, 1),
                       elevation: 0,
@@ -199,6 +205,15 @@ class LoginPageState extends State<LoginPage1> {
                     )
                   ],
                 ),
+               Text(
+                        "By TG Developers",
+                        style: TextStyle(
+                          //fontWeight: FontWeight.w600,
+                          fontSize: 12,  
+                          color: Color(0xffa27bbc), 
+                          fontFamily: "RobotoMedium", 
+                        ),
+                      ),
               ],
             ))
           ],

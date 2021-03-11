@@ -21,11 +21,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp( 
       debugShowCheckedModeBanner: false, 
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-       
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ), 
+     /*   brightness: Brightness.light,
 
+        primarySwatch: Colors.grey,
+        primaryColor: Colors.grey[50],
+        primaryColorBrightness: Brightness.light,*/
+
+        //this is what you want
+        accentColor: Colors.grey[300],
+        accentColorBrightness: Brightness.light,
+      ),
 
 
 

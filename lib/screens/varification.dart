@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 //import 'package:todolist/Controllers/databasehelper.dart';
 import 'createpassword.dart';
-
+import 'password.dart'; 
 
 
 String code = ""; 
 class Varification extends StatefulWidget {
-  Varification({Key key}) : super(key: key);
-
+final String s;  
+  Varification(this.s); 
   @override
   VarificationState createState() => VarificationState();
 }
@@ -88,7 +88,7 @@ class VarificationState extends State<Varification> {
                         
                     Navigator.pushReplacement(context,
                       MaterialPageRoute(
-                          builder: (context) => CreatePassword()));
+                          builder: (context) => CreatePassword(s, code)));
                   },
                   color: Color.fromRGBO(61, 167, 0, 1),
                   elevation: 0,
