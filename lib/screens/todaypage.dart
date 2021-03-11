@@ -104,7 +104,7 @@ void initState() {
     children: <Widget>[ 
  Expanded(
       child:    (listoftasks[position].isCompleted == 0)? ListTile( 
-        leading:    buildCheckBox(position),
+        leading:    buildCheckBox(position, 1),
           title:  Text('${listoftasks[position].name}', 
               style: TextStyle(
                 color:  Color(0xffa06db2),
@@ -189,7 +189,7 @@ void initState() {
     children: <Widget>[ 
  Expanded(
       child:  (listoftasks[position].isCompleted == 1)? ListTile( 
-        leading:    buildCheckBox(position),
+        leading:    buildCheckBox(position, 2),
           title:  Text('${listoftasks[position].name}', 
               style: TextStyle(
                 color:  Color(0xffa06db2),
@@ -236,7 +236,10 @@ void initState() {
     );
   } 
 
-  Widget buildCheckBox(index) => InkWell(
+  Widget buildCheckBox(index, int i){ 
+  
+  if(i==1){ 
+  return InkWell(
         onTap: () async{
           
         var f= await db.markAsDone(listoftasks[index].id); 
@@ -271,8 +274,34 @@ void initState() {
           ),
         ),
       ); 
+ }else if(i==2){ 
+    return InkWell(
+        onTap: () async {
+          bool f = await db.markAsDone(listoftasks[index].id);
+          if (f == false) {
+            setState(() {
+              isChecked[index] = !isChecked[index];
+            });
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xff3da700),
+              border: Border.all(color: Color(0xff3da700), width: 2)),
+          child: Padding(
+            padding: const EdgeInsets.all(9.0),
+            child: Icon(
+              Icons.check,
+              size: 12.0,
+              color: Colors.white,
+            ),
+          ),
+        ), 
 
-
+      );
+    }
+  }
 
  _appBar(height, fdate, frday) => PreferredSize(
     preferredSize:  Size(MediaQuery.of(context).size.width, height + 200.0 ),

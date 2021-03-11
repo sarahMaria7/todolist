@@ -6,7 +6,7 @@ import 'createpassword.dart';
 
 
 
-
+String code = ""; 
 class Varification extends StatefulWidget {
   Varification({Key key}) : super(key: key);
 
@@ -17,7 +17,7 @@ class Varification extends StatefulWidget {
 
 class VarificationState extends State<Varification> {
 
-  final TextEditingController _codeController = new TextEditingController();
+  //final TextEditingController _codeController = new TextEditingController();
 
 
   @override
@@ -76,7 +76,7 @@ class VarificationState extends State<Varification> {
               ),
               Column(
                 children: <Widget>[
-                  inputFile(label: '-', keyboardType: TextInputType.text,controller: _codeController),
+                  inputFile(label: '-', keyboardType: TextInputType.text),
                 ],
               ),
               Container(
@@ -84,8 +84,9 @@ class VarificationState extends State<Varification> {
                 child: MaterialButton(
                   minWidth: double.infinity,
                   height: 60,
-                  onPressed: () {
-                    Navigator.push(context,
+                  onPressed: () { 
+                        
+                    Navigator.pushReplacement(context,
                       MaterialPageRoute(
                           builder: (context) => CreatePassword()));
                   },
@@ -114,7 +115,7 @@ class VarificationState extends State<Varification> {
 
 // we will be creating a widget for text field
 Widget inputFile(
-    {label, obscureText = false, keyboardType = TextInputType.text,controller}) {
+    {label, obscureText = false, keyboardType = TextInputType.text}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -122,7 +123,10 @@ Widget inputFile(
         height: 5,
       ),
       TextField(
-        controller: controller,
+         onChanged: (text){
+              code = text.trim(); 
+              print(code); 
+         }, 
         obscureText: obscureText,
         keyboardType: keyboardType,
         style: TextStyle(

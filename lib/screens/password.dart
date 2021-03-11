@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:todolist/Controllers/databasehelper.dart';
 import 'package:todolist/screens/signin.dart';
 import 'varification.dart';
-
+String s = ""; 
 class Password extends StatefulWidget {
   Password({Key key}) : super(key: key);
 
@@ -17,7 +17,7 @@ class PasswordState extends State<Password> {
   DatabaseHelper databaseHelper = new DatabaseHelper();
   String msgStatus = '';
 
-  final TextEditingController _emailController = new TextEditingController();
+
 void _showDialog(){ 
     showDialog(
         context:context ,
@@ -111,13 +111,13 @@ void _showDialog(){
                   height: 60,
                   onPressed: () {
 
-                    databaseHelper.sendVerifiedEmail(_emailController.text.trim().toLowerCase()); 
-                       _showDialog(); 
-                    Navigator.push(
+                    databaseHelper.sendVerifiedEmail(s); 
+                
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => Varification()));
-
+                               _showDialog(); 
 
                   },
                   color: Color.fromRGBO(61, 167, 0, 1),
@@ -149,7 +149,10 @@ Widget inputFile({label, obscureText = false}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      TextField(
+      TextField( 
+        onChanged: (text){
+          s = text.trim().toLowerCase(); 
+        }, 
         keyboardType: TextInputType.emailAddress,
         obscureText: obscureText,
         style: TextStyle(

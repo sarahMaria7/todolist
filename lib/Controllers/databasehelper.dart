@@ -109,6 +109,30 @@ sendVerifiedEmail(String email) async{
     }
 
   }
+resetPassword(String code, String email, String pwd, String nwpwd) async{
+    String myUrl = "$serverUrl/password/reset"; 
+    final response = await  http.post(myUrl, 
+     headers: {'Accept':'application/json', 
+                      },  
+        body: {
+          "email": "$email", 
+          "token": "$code", 
+          "password": "$pwd", 
+          "password_confirmation": "$nwpwd",
+        } ) ;
+    status = response.body.contains('error');
+
+    var data = json.decode(response.body);
+   
+             
+    if(status){
+      print('data : ${data["error"]}');
+    }else{
+      print('data : ${data["message"]}');
+      //_save(data["access_token"]);
+    }
+
+  }
 
 Future<List<Task>> getTodyTasks()async{
     List tasklist=List<Task>();
@@ -131,7 +155,7 @@ Future<List<Task>> getTodyTasks()async{
       var t= Task.fromJson(l[i]);
       tasklist.add(t);
     }
-    print("afficher list: ${tasklist[0].name}"); 
+    //print("afficher list: ${tasklist[0].name}"); 
            }
     catch(e) {}
     return tasklist;
@@ -147,7 +171,7 @@ Future<List<Task>> getTomorrowTasks()async{
   final key = 'token'; 
   final value = prefs.get(key ) ?? 0; 
     try{
-      http.Response res= await http.get(myUrl,
+      http.Response res= await http.post(myUrl,
         headers: { "Accept": 'application/json',
           'Authorization': 'Bearer $value'}, 
       );
@@ -307,6 +331,8 @@ void addDataTomorrow(String name) async {
        print('Response body : ${response.body}');
      });
    }
+
+
 
   //
   //

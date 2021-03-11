@@ -3,6 +3,7 @@ import 'package:todolist/widgets/drawer.dart';
 import 'package:intl/intl.dart' as intl; 
 import 'package:todolist/Controllers/databasehelper.dart'; 
 import 'addtaskstomorrow.dart'; 
+import 'package:flutter_slidable/flutter_slidable.dart';  
 class TomorrowPage extends StatefulWidget {
   TomorrowPage({Key key}) : super(key: key);
 
@@ -55,9 +56,9 @@ void initState() {
                        child: Column( 
             //mainAxisAlignment: MainAxisAlignment.start,  
             children: <Widget>[ 
-              SizedBox(height: 55.0), 
+              SizedBox(height: 25.0), 
               CircleAvatar(
-                radius: 55.0,
+                radius: 35.0,
                 backgroundImage: AssetImage('assets/images/paper2.png'), 
                 backgroundColor: Colors.transparent, 
               ), 
@@ -69,17 +70,100 @@ void initState() {
                 color:  Color(0x805700bb), 
                 fontFamily: "RobotoMedium", 
                 //fontStyle:  FontStyle.normal,
-                fontSize: 19.0, 
+                fontSize: 16.0, 
             ), 
                  ), 
                ), 
             ], 
                        ),  
-                    ): 
-                    Container(), 
-                
+                    ):    
+          Container(  
+                         padding: EdgeInsets.all(12.0), 
+                       child:  Text('Ongoing tasks', 
+              style: TextStyle(
+                color:  Color(0xff7718b9), 
+                fontWeight: FontWeight.w500,
+                fontFamily: "RobotoMedium", 
+                //fontStyle:  FontStyle.normal,
+                fontSize: 19.0, 
+            ), 
+          
+          ), 
+                       ), 
+   Expanded(        
+ child:  ListView.builder( 
+    //scrollDirection: Axis.vertical, 
+                itemCount:(listoftasksTm.length), 
+                itemBuilder: (BuildContext context, int position) {
+                  return 
+                  Container(
+                  child: Column(  
+                    crossAxisAlignment: CrossAxisAlignment.start,   
+                     children: <Widget>[ 
+                      
+                       Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+
+                  secondaryActions: [
+                  IconSlideAction(
+                  color:Color(0xffe8e8e8), 
+                  icon:Icons.delete ,
+                  foregroundColor:Colors.green, 
+                  onTap: () async{
+                   var st= await db.deleteData(listoftasksTm[position].id); 
+                     if(st==true){
+                     setState(() {
+                       listoftasksTm.removeAt(position);
+                          }); 
+                   }
+                  },  
+                  ), 
+
+                  ],  
+         child:   Container(
+                 child: Row( 
+                    crossAxisAlignment: CrossAxisAlignment.center,  
+    children: <Widget>[ 
+ Expanded(
+      child: ListTile( 
+          title:  Text('${listoftasksTm[position].name}', 
+              style: TextStyle(
+                color:  Color(0xffa06db2),
+                fontWeight: FontWeight.w500,
+                fontFamily: "RobotoBold",
+                //fontStyle:  FontStyle.normal,
+                fontSize: 16.0, 
+            ), 
+          
+          ), 
+    
+        ),  
+      
+      
+ ), 
+
     ], 
-      ), 
+), 
+            ), 
+                       ), 
+         (position==(listoftasksTm.length-1))? Container(): Divider(thickness: 1, color: Color(0xff43c800)),                    
+                     ], 
+                  ), 
+                  ); 
+                  
+       
+       
+
+
+                }), 
+
+
+   ), 
+                ], 
+                    ), 
+                
+     
+      
       
     
     );

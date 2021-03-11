@@ -1,7 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'varification.dart'; 
+import 'package:todolist/Controllers/databasehelper.dart';
+import 'password.dart'; 
 
 
+
+String pwd = ""; 
+String nwpwd = ""; 
 class CreatePassword extends StatefulWidget {
   CreatePassword({Key key}) : super(key: key);
 
@@ -11,7 +17,7 @@ class CreatePassword extends StatefulWidget {
 
 
 class CreatePasswordState extends State<CreatePassword> {
-
+DatabaseHelper db = new DatabaseHelper(); 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +83,9 @@ class CreatePasswordState extends State<CreatePassword> {
                 child: MaterialButton(
                   minWidth: double.infinity,
                   height: 60,
-                  onPressed: () {
+                  onPressed: () { 
+                      print(code); 
+                  db.resetPassword(code, s, pwd, nwpwd); 
                     showDialog(
                         context: context,
                         builder: (_) => Dialog(
@@ -106,7 +114,7 @@ class CreatePasswordState extends State<CreatePassword> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromRGBO(119, 24, 185, 1),
-                                        fontSize: 50),
+                                        fontSize: 35),
                                   )
                                 ],
                               ),
@@ -145,7 +153,11 @@ Widget inputFile({label, obscureText = false}) {
       SizedBox(
         height: 5,
       ),
-      TextField(
+      TextField( 
+        onChanged: (text){
+              pwd = text.trim(); 
+              nwpwd = text.trim(); 
+         }, 
         obscureText: obscureText,
         style: TextStyle(
           color: Color.fromRGBO(119, 24, 185, 1),
