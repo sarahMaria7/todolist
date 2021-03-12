@@ -420,7 +420,11 @@ void addDataTomorrow(String name) async {
         return status; 
   }
 
-
+ logOut() async{
+     final prefs = await SharedPreferences.getInstance();
+     prefs.remove('token');
+     //prefs.remove('isAdmin');
+   }
 
 
 

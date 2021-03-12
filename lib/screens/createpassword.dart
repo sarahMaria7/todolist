@@ -113,7 +113,7 @@ void _showDialog(var msg){
                   onPressed: () { 
                  if(pwd==nwpwd &&!(pwd==''||nwpwd=='')&&(pwd.length>=8||nwpwd.length>=8)){ 
                        print("code=$code "+ "s=$s "+ "pwd=$pwd "+ "nwpwd=$nwpwd "); 
-              db.resetPassword(code+'lll', s+'lll', pwd, nwpwd); 
+              db.resetPassword(code, s, pwd, nwpwd); 
                     showDialog(
                         context: context,
                         builder: (_) => Dialog(

@@ -120,7 +120,8 @@ void _showDialog(){
                     "Enter your address Email",
                     style: TextStyle(
                       fontSize: 19,
-                      color: Color.fromRGBO(119, 24, 185, 1),
+                      color: Color(0xff7718b9), 
+                      fontFamily: "RobotoMedium", 
                     ),
                   )
                 ],
@@ -202,8 +203,12 @@ Widget inputFile({label, obscureText = false}) {
           ),
           hintText: label,
           hintStyle: TextStyle(
-              color: Color.fromRGBO(119, 24, 185, 1),
-              fontWeight: FontWeight.w300),
+              color: Color(0x807718b9), 
+              //fontWeight: FontWeight.w300, 
+              fontFamily: "RobotoMedium", 
+              fontSize: 19.0,  
+              
+              ),
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         ),
       ),
