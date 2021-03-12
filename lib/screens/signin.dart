@@ -60,7 +60,11 @@ class LoginPageState extends State<LoginPage1> {
                 //MaterialPageRoute(builder: (context) => TodayPage())); 
                  Navigator.of(context).pushReplacementNamed('/todaypage'); 
           }
-        });
+        }); 
+         }else if(_emailController.text.trim().toLowerCase().isEmpty ||
+          _passwordController.text.trim().isEmpty ){
+                _showDialog();
+      
       }
     });
   }

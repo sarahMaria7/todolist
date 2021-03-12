@@ -137,7 +137,7 @@ void _showDialog(){
                   minWidth: double.infinity,
                   height: 60,
                   onPressed: () {
-                if (databaseHelper.geIsTrue == true){
+                if (databaseHelper.geIsTrue == true || s==''){
                   _showDialog2(); 
                 }else{ 
                    Navigator.of(context).pushNamed('/varification'); 

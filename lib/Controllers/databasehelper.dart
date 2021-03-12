@@ -11,6 +11,11 @@ class DatabaseHelper{
   bool isTrue = false; 
   bool get geIsTrue => isTrue; 
   void setIsTrue(bool isTrue) => this.isTrue = isTrue; 
+
+   bool isTrue2 = false; 
+  bool get geIsTrue2 => isTrue; 
+  void setIsTrue2(bool isTrue) => this.isTrue = isTrue; 
+
  var responseMg; 
   loginData(String email , String password) async{
     String myUrl = "$serverUrl/login";
@@ -57,9 +62,11 @@ class DatabaseHelper{
     var data = json.decode(response.body);
 
       
-    if(status){
+    if(status){ 
+         setIsTrue2(true); 
       print('data : ${data["error"]}');
-    }else{
+    }else{ 
+        setIsTrue2(false); 
       print('data : ${data["access_token"]}');
       //_save(data["access_token"]);
     }

@@ -19,7 +19,30 @@ class VarificationState extends State<Varification> {
 
   //final TextEditingController _codeController = new TextEditingController();
 
+void _showDialog(){ 
+    showDialog(
+        context:context ,
+        builder:(BuildContext context){
+          return AlertDialog(
+            title: new Text('Error'),
+            content:  new Text("Please enter the code"),
+            actions: <Widget>[
+              new RaisedButton(
 
+                child: new Text(
+                  'Close',
+                ),
+
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+
+              ),
+            ],
+          );
+        }
+    );
+  } 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,11 +107,14 @@ class VarificationState extends State<Varification> {
                 child: MaterialButton(
                   minWidth: double.infinity,
                   height: 60,
-                  onPressed: () { 
-                        
+                  onPressed: () {
+                    if(code==""){
+                      _showDialog();
+                    }else{    
                     Navigator.pushReplacement(context,
                       MaterialPageRoute(
-                          builder: (context) => CreatePassword(s, code)));
+                          builder: (context) => CreatePassword(s, code))); 
+                    }
                   },
                   color: Color.fromRGBO(61, 167, 0, 1),
                   elevation: 0,

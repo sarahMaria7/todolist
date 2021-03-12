@@ -9,6 +9,7 @@ import 'password.dart';
 
 String pwd = ""; 
 String nwpwd = ""; 
+DatabaseHelper db = new DatabaseHelper();  
 class CreatePassword extends StatefulWidget { 
  final String s; 
  final String code; 
@@ -20,13 +21,13 @@ class CreatePassword extends StatefulWidget {
 
 
 class CreatePasswordState extends State<CreatePassword> {
-DatabaseHelper db = new DatabaseHelper(); 
+ 
 void _showDialog(var msg){ 
     showDialog(
         context:context ,
         builder:(BuildContext context){
           return AlertDialog(
-            title: new Text('check your password'),
+            title: new Text('Error'),
             content:  new Text(msg),
             actions: <Widget>[
               new RaisedButton(
@@ -111,7 +112,7 @@ void _showDialog(var msg){
                   minWidth: double.infinity,
                   height: 60,
                   onPressed: () { 
-                 if(pwd==nwpwd &&!(pwd==''||nwpwd=='')&&(pwd.length>=8||nwpwd.length>=8)){ 
+               if(pwd==nwpwd &&(pwd.length>=8||nwpwd.length>=8) && db.geIsTrue2==false){ 
                        print("code=$code "+ "s=$s "+ "pwd=$pwd "+ "nwpwd=$nwpwd "); 
               db.resetPassword(code, s, pwd, nwpwd); 
                     showDialog(
@@ -155,7 +156,10 @@ void _showDialog(var msg){
                     }else if(pwd==""||nwpwd==""){
                       _showDialog("Password or Password confirmation must be written");
                     }else if(pwd==nwpwd && pwd.length<8){
-                      _showDialog("Password must be at least 8 characters");
+                      _showDialog("Password must be at least 8 characters"); 
+                       }else if(db.geIsTrue2 == true){
+                      _showDialog("The code you entered is not true");
+                    
                     }  
                   },
                   color: Color.fromRGBO(61, 167, 0, 1),
@@ -190,8 +194,10 @@ Widget inputFile({label, obscureText = false}) {
         height: 5,
       ),
       TextField( 
-        onChanged: (text){
+        onChanged: (text){ 
+          db.resetPassword(code, s, pwd, nwpwd);  
               pwd = text.trim(); 
+              db.geIsTrue2;  
          }, 
         obscureText: obscureText,
         style: TextStyle(
@@ -233,6 +239,7 @@ Widget inputFile2({label, obscureText = false}) {
       TextField( 
         onChanged: (text){
               nwpwd = text.trim(); 
+              db.geIsTrue2;  
          }, 
         obscureText: obscureText,
         style: TextStyle(
