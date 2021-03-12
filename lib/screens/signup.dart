@@ -1,9 +1,9 @@
 import 'dart:ui';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist/Controllers/databasehelper.dart';
 import 'package:flutter/material.dart';
-import 'package:todolist/screens/todaypage.dart';
-import 'signin.dart';
+//import 'package:todolist/screens/todaypage.dart';
+//import 'signin.dart';
 
 
 
@@ -36,15 +36,16 @@ class SignupPageState extends State<SignupPage> {
         databaseHelper.registerData(_nameController.text.trim(),_emailController.text.trim().toLowerCase(),
 
             _passwordController.text.trim(),_confirmPassword.text.trim()).whenComplete((){
-          if(databaseHelper.status){
-            _showDialog();
-            msgStatus = 'Check email or password';
-            print('if');
-          }else{
-            //print('else');
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => LoginPage1()));
-          }
+          //if(databaseHelper.status){
+            //_showDialog();
+            //msgStatus = 'Check email or password';
+            //print('if');
+          //}else{
+            //print('else'); 
+          Navigator.of(context).pushNamed('/login');
+            //Navigator.pushReplacement(context,
+                //MaterialPageRoute(builder: (context) => LoginPage1()));
+          //}
         });
       }
     });
@@ -81,23 +82,23 @@ class SignupPageState extends State<SignupPage> {
     );
   }
 
-  read() async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
-    final value = prefs.get(key ) ?? 0;
-    if(value != '0'){
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(
-            builder: (BuildContext context) => new TodayPage(),
-          )
-      );
-    }
-  }
+  //read() async {
+    //final prefs = await SharedPreferences.getInstance();
+    //final key = 'token';
+    //final value = prefs.get(key ) ?? 0;
+    //if(value != '0'){
+      //Navigator.of(context).pushReplacement(
+          //new MaterialPageRoute(
+            //builder: (BuildContext context) => new TodayPage(),
+          //)
+      //);
+    //}
+  //}
 
 
   @override
   initState(){
-    read(); 
+    //read(); 
     super.initState(); 
   }
 
@@ -143,11 +144,7 @@ class SignupPageState extends State<SignupPage> {
                   minWidth: double.infinity,
                   height: 60,
                   onPressed:(){
-                    _onPressed();
-                    print(_nameController.text +" "+
-                        _emailController.text +" "+
-                        _passwordController.text +" "+_confirmPassword.text +" "
-                    );
+                    _onPressed(); 
                   },
                   color: Color.fromRGBO(61, 167, 0, 1),
                   elevation: 0,
@@ -176,8 +173,7 @@ class SignupPageState extends State<SignupPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginPage1()));
+                         Navigator.of(context).pushNamed('/login'); 
                     },
                     child: Text(
                       " Sign in",

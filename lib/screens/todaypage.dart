@@ -409,12 +409,13 @@ Future<Null> refreshList() async {
           right: 20.0, 
           //bottom: 55.0, 
           child:RawMaterialButton(
-            onPressed: () {
-             Navigator.of(context).push(
-              new MaterialPageRoute( 
-                builder: (BuildContext context) => new AddTask(),
-              )
-          ); 
+            onPressed: () { 
+               Navigator.of(context).pushNamed('/addtask');
+             //Navigator.of(context).push(
+              //new MaterialPageRoute( 
+                //builder: (BuildContext context) => new AddTask(),
+              //)
+          //); 
             },
             elevation: 2.0,
             //fillColor: Colors.green, 

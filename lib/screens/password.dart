@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:todolist/Controllers/databasehelper.dart';
-import 'package:todolist/screens/signin.dart';
-import 'varification.dart';
+//import 'package:todolist/screens/signin.dart';
+//import 'varification.dart';
 String s = ""; 
   DatabaseHelper databaseHelper = new DatabaseHelper();  
 class Password extends StatefulWidget {
@@ -85,11 +85,12 @@ void _showDialog(){
           ),
         ),
         leading: IconButton(
-          onPressed: () {
-             Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage1()));
+          onPressed: () { 
+             Navigator.of(context).pushNamed('/login');
+             //Navigator.push(
+                            //context,
+                            //MaterialPageRoute(
+                                //builder: (context) => LoginPage1()));
           },
           icon: Icon(
             Icons.arrow_back_ios,
@@ -137,11 +138,12 @@ void _showDialog(){
                   onPressed: () {
                 if (databaseHelper.geIsTrue == true){
                   _showDialog2(); 
-                }else{
-                     Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Varification(s)));
+                }else{ 
+                   Navigator.of(context).pushNamed('/varification'); 
+                     //Navigator.pushReplacement(
+                        //context,
+                        //MaterialPageRoute(
+                            //builder: (context) => Varification(s)));
                                _showDialog(); 
 
                 }

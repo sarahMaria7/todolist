@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/Controllers/databasehelper.dart';
-import 'tomorrowpage.dart';
+//import 'tomorrowpage.dart';
 
 
 
@@ -77,11 +77,7 @@ class AddTaskTomorrowState extends State<AddTaskTomorrow> {
                        if(_nameController.text.trim().length !=0){
                     db.addDataTomorrow(
                         _nameController.text.trim());
-                    Navigator.of(context).push(
-                        new MaterialPageRoute(
-                          builder: (BuildContext context) => new TomorrowPage(),
-                        )
-                    ); 
+                   Navigator.of(context).pushNamed('/tomorrowpage');
                        } 
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xff7718b9))),

@@ -148,10 +148,7 @@ void _showDialog(var msg){
                               ),
                             )).then((value) =>
                         //سيتم تغيير هذا الاقتران اثناء عملية الربط 
-                        Navigator.pushReplacement( 
-                          context, 
-                          MaterialPageRoute( 
-                            builder: (context)  => LoginPage1())) 
+                         Navigator.of(context).pushReplacementNamed('/login'), 
                             ); 
                               }else if(pwd!= nwpwd){
                       _showDialog("Password and Password confirmation must be same as above");

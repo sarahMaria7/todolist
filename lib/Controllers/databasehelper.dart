@@ -53,7 +53,7 @@ class DatabaseHelper{
         } ) ; 
   
     status = response.body.contains('error');
-
+         
     var data = json.decode(response.body);
 
       
@@ -79,12 +79,18 @@ class DatabaseHelper{
             headers: {'Accept':'application/json',
                       'Authorization' : 'Bearer $value'},                      
           ); 
+       status = response.body.contains('error'); 
                 var data = json.decode(response.body); 
-                var message = data["message"]; 
-                print("this is logout $message"); 
-        
-                prefs.remove(token); 
-                
+                //var message = data['message']; 
+                //print("this is logout $message"); 
+        if(!status){
+           prefs.remove(token); 
+        }
+             
+         else{
+        responseMg = data['message'].toString(); 
+        print(data['message']); 
+      }       
 
   } 
 
@@ -398,11 +404,20 @@ void addDataTomorrow(String name) async {
     
   }
 
-  read() async {
+   Future<bool> read() async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
-    final value = prefs.get(key ) ?? 0;
-    print('read : $value');
+    //final key = 'token';
+    //final value = prefs.get(key ) ?? 0;
+    //print('read : $value'); 
+    status = false; 
+     if(prefs.containsKey('token')&& 
+        prefs.getString('token')!=null && 
+        prefs.getString('token')!=''){
+               status = true; 
+        }else{
+          status = false; 
+        } 
+        return status; 
   }
 
 

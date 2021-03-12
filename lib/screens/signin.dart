@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist/Controllers/databasehelper.dart';
 import 'package:flutter/material.dart';
-import 'package:todolist/screens/todaypage.dart';
-import 'signup.dart';
-import 'password.dart';
+//import 'package:todolist/screens/todaypage.dart';
+//import 'signup.dart';
+//import 'password.dart';
 
 class LoginPage1 extends StatefulWidget {
   LoginPage1({Key key}) : super(key: key);
@@ -17,22 +17,22 @@ class LoginPage1 extends StatefulWidget {
 class LoginPageState extends State<LoginPage1> {
 
 
-  read() async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
-    final value = prefs.get(key ) ?? 0;
-    if(value != '0'){
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(
-            builder: (BuildContext context) => new TodayPage(),
-          )
-      );
-    }
-  }
+  //read() async {
+    //final prefs = await SharedPreferences.getInstance();
+    //final key = 'token';
+    //final value = prefs.get(key ) ?? 0;
+    //if(value != '0'){
+      //Navigator.of(context).pushReplacement(
+          //new MaterialPageRoute(
+            //builder: (BuildContext context) => new TodayPage(),
+          //)
+      //);
+    //}
+  //}
 
   @override
   initState(){
-    read(); 
+    //read(); 
     super.initState(); 
   }
 
@@ -55,9 +55,10 @@ class LoginPageState extends State<LoginPage1> {
             _showDialog();
             msgStatus = 'Check email or password';
           }else{
-            print('else');
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => TodayPage()));
+            //print('else');
+            //Navigator.pushReplacement(context,
+                //MaterialPageRoute(builder: (context) => TodayPage())); 
+                 Navigator.of(context).pushReplacementNamed('/todaypage'); 
           }
         });
       }
@@ -132,10 +133,7 @@ class LoginPageState extends State<LoginPage1> {
                       inputFile(label: "Password", obscureText: true,controller: _passwordController),
                       InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Password()));
+                          Navigator.of(context).pushNamed('/forgetpassword');
                         },
                         child: Text(
                           "Forget password?",
@@ -187,10 +185,7 @@ class LoginPageState extends State<LoginPage1> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignupPage()));
+                        Navigator.of(context).pushNamed('/signUp'); 
                       },
                       child: Text(
                         " Sign up",

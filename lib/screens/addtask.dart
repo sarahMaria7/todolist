@@ -78,11 +78,7 @@ class AddTaskState extends State<AddTask> {
                     
                     db.addData(
                         _nameController.text.trim());
-                    Navigator.of(context).push(
-                        new MaterialPageRoute(
-                          builder: (BuildContext context) => new TodayPage(),
-                        )
-                    ); 
+                   Navigator.of(context).pushNamed('/todaypage');
                     }
                     
                   },

@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:todolist/Controllers/databasehelper.dart'; 
 import 'package:todolist/screens/signin.dart';
 import 'package:todolist/screens/todaypage.dart'; 
-import 'package:todolist/screens/tomorrowpage.dart';  
+import 'package:todolist/screens/tomorrowpage.dart'; 
+import 'package:todolist/controllers/function.dart';   
 Widget drawerwidget(BuildContext context) {
  //DatabaseHelper db=  DatabaseHelper(); 
 
 
  
-  _save(String token) async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
-    final value = token;
-    prefs.setString(key, value);
-  }
+  //_save(String token) async {
+    //final prefs = await SharedPreferences.getInstance();
+    //final key = 'token';
+    //final value = token;
+    //prefs.setString(key, value);
+  //}
 
 
 
@@ -50,7 +51,7 @@ Widget drawerwidget(BuildContext context) {
                                    ),
                                  ),
                                ),
-                      Text("Team Tokoyo",  
+                      Text("Team Tokyo",  
                       style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
 
                               ],
@@ -111,11 +112,7 @@ Widget drawerwidget(BuildContext context) {
                     textAlign: TextAlign.end, 
               ),
               onTap: () {
-                _save('0');
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => LoginPage1()));
-
-
+                fctExit(context); 
               },
             ),
        
